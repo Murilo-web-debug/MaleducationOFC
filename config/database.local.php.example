@@ -1,0 +1,21 @@
+<?php
+/**
+ * Exemplo de configuração local do banco de dados
+ *
+ * Renomeie este arquivo para database.local.php e preencha com suas credenciais
+ * Este arquivo NÃO deve ser commitado no versionamento (já está no .gitignore)
+ */
+
+return [
+    'host' => 'localhost',
+    'port' => 3306,
+    'database' => 'maleducation',
+    'username' => 'root',
+    'password' => '', // Preencha com sua senha do MySQL se necessário
+    'charset' => 'utf8mb4',
+    'options' => [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_EMULATE_PREPARES => false,
+    ]
+];

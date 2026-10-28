@@ -1,0 +1,924 @@
+{
+    "id": "chapter_01",
+    "title": "Capítulo 1",
+    "start_scene": "scene_home_wakeup",
+    "scenes": [
+        {
+            "id": "scene_home_wakeup",
+            "elements": [
+                {
+                    "type": "background",
+                    "value": "quarto_desarrumado.jpeg"
+                },
+                {
+                    "type": "play_sfx",
+                    "filename": "alarm_clock.mp3"
+                },
+                {
+                    "type": "narration",
+                    "text": "O alarme toca, cortando o silêncio do quarto. O dia está frio e nublado, uma luz pálida tentando se infiltrar pelas cortinas."
+                },
+                {
+                    "type": "narration",
+                    "text": "Ontem foi a matrícula em sua nova escola. A realidade parece estar tentando se instalar."
+                },
+                {
+                    "type": "narration",
+                    "text": "O quarto está desarrumado. Roupas amontoadas sobre a cadeira, livros empilhados no chão, caixas ainda fechadas no canto."
+                },
+                {
+                    "type": "narration",
+                    "text": "Você se levanta e passa pela porta do quarto. Ali estão seus pais, como se estivessem esperando."
+                },
+                {
+                    "type": "show_character",
+                    "position": "center",
+                    "expression": "neutral"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Mãe",
+                    "text": "Está pronto para seu primeiro dia de aula?"
+                },
+                {
+                    "type": "set_character",
+                    "character": "mae.jpeg"
+                },
+                {
+                    "type": "set_character",
+                    "character": "mae.jpeg"
+                },
+                {
+                    "type": "choices",
+                    "choices": [
+                        {
+                            "text": "Sim",
+                            "target": "scene_home_wakeup_yes"
+                        },
+                        {
+                            "text": "Não",
+                            "target": "scene_home_wakeup_no"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "scene_home_wakeup_yes",
+            "elements": [
+                {
+                    "type": "dialogue",
+                    "speaker": "Mãe",
+                    "text": "Que bom que está animado. Vai ser um bom começo."
+                },
+                {
+                    "type": "set_character",
+                    "character": "mae.jpeg"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Pai",
+                    "text": "Gosto dessa energia. A gente vai precisar dela."
+                },
+                {
+                    "type": "set_character",
+                    "character": "pai.jpeg"
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_home_parents_reaction"
+                }
+            ]
+        },
+        {
+            "id": "scene_home_wakeup_no",
+            "elements": [
+                {
+                    "type": "dialogue",
+                    "speaker": "Mãe",
+                    "text": "Entendo que está nervoso, mas vai ficar tudo bem."
+                },
+                {
+                    "type": "set_character",
+                    "character": "mae.jpeg"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Pai",
+                    "text": "É normal ter medo do desconhecido. Mas às vezes é preciso encarar mesmo assim."
+                },
+                {
+                    "type": "set_character",
+                    "character": "pai.jpeg"
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_home_parents_reaction"
+                }
+            ]
+        },
+        {
+            "id": "scene_home_parents_reaction",
+            "elements": [
+                {
+                    "type": "dialogue",
+                    "speaker": "Pai",
+                    "text": "Eu sei que é difícil encarar essa mudança repentina, mas é o melhor a ser feito depois do que aconteceu em nossa outra casa."
+                },
+                {
+                    "type": "set_character",
+                    "character": "pai.jpeg"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Mãe",
+                    "text": "A nova escola parece... adequada. E os professores pareceram comprometidos."
+                },
+                {
+                    "type": "set_character",
+                    "character": "mae.jpeg"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Pai",
+                    "text": "Vamos lá comer algo antes de sair, estou morrendo de fome."
+                },
+                {
+                    "type": "set_character",
+                    "character": "pai.jpeg"
+                },
+                {
+                    "type": "narration",
+                    "text": "Você ia dizer algo, mas seu pai já está se encaminhando para a cozinha."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_breakfast"
+                }
+            ]
+        },
+        {
+            "id": "scene_breakfast",
+            "elements": [
+                {
+                    "type": "background",
+                    "value": "cozinha.jpeg"
+                },
+                {
+                    "type": "play_sfx",
+                    "filename": "kitchen_ambience.mp3"
+                },
+                {
+                    "type": "narration",
+                    "text": "A cozinha está relativamente organizada. O aroma de café recente ainda paira no ar. Seus pais já estão à mesa."
+                },
+                {
+                    "type": "show_character",
+                    "position": "left",
+                    "expression": "neutral"
+                },
+                {
+                    "type": "show_character",
+                    "position": "right",
+                    "expression": "neutral"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Mãe",
+                    "text": "Preparei café. Você quer?"
+                },
+                {
+                    "type": "set_character",
+                    "character": "mae.jpeg"
+                },
+                {
+                    "type": "choices",
+                    "choices": [
+                        {
+                            "text": "Sim, café",
+                            "target": "scene_breakfast_coffee"
+                        },
+                        {
+                            "text": "Não, prefiro outra coisa",
+                            "target": "scene_breakfast_other"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "scene_breakfast_coffee",
+            "elements": [
+                {
+                    "type": "narration",
+                    "text": "Você aceita o café. O líquido escuro quente enche a xícara, soltando vapor."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Pai",
+                    "text": "Ah, café. Me lembra quando você nem chegava perto da caneca."
+                },
+                {
+                    "type": "set_character",
+                    "character": "pai.jpeg"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Mãe",
+                    "text": "O tempo passa rápido, não é? Antes mal podia ficar acordado de manhã."
+                },
+                {
+                    "type": "set_character",
+                    "character": "mae.jpeg"
+                },
+                {
+                    "type": "narration",
+                    "text": "Você toma o café em silêncio. O sabor amargo enche sua boca."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Pai",
+                    "text": "A nova escola... Águia da Doom and despair. O nome é... peculiar."
+                },
+                {
+                    "type": "set_character",
+                    "character": "pai.jpeg"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Mãe",
+                    "text": "É antiga. Fundada nos anos 90, se não me engano. Tem tradição."
+                },
+                {
+                    "type": "set_character",
+                    "character": "mae.jpeg"
+                },
+                {
+                    "type": "narration",
+                    "text": "Há algo no tom dela que parece forçar o otimismo."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_prepare_to_leave"
+                }
+            ]
+        },
+        {
+            "id": "scene_breakfast_other",
+            "elements": [
+                {
+                    "type": "narration",
+                    "text": "Você recusa o café. Sua mãe pega um suco de caixinha do armário e lhe entrega."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Mãe",
+                    "text": "Sempre teve preferências particulares. É bom assim."
+                },
+                {
+                    "type": "set_character",
+                    "character": "mae.jpeg"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Pai",
+                    "text": "Café para criança... Talvez seja melhor mesmo."
+                },
+                {
+                    "type": "set_character",
+                    "character": "pai.jpeg"
+                },
+                {
+                    "type": "narration",
+                    "text": "Você bebe o suco. Doce, artificial, mas seguro."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Pai",
+                    "text": "A nova escola... Águia da Doom and despair. O nome é... peculiar."
+                },
+                {
+                    "type": "set_character",
+                    "character": "pai.jpeg"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Mãe",
+                    "text": "É antiga. Fundada nos anos 90, se não me engano. Tem tradição."
+                },
+                {
+                    "type": "set_character",
+                    "character": "mae.jpeg"
+                },
+                {
+                    "type": "narration",
+                    "text": "Há algo no tom dela que parece forçar o otimismo."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_prepare_to_leave"
+                }
+            ]
+        },
+        {
+            "id": "scene_prepare_to_leave",
+            "elements": [
+                {
+                    "type": "narration",
+                    "text": "O café da manhã termina em silêncio. Você se levanta e volta ao quarto para pegar sua mochila."
+                },
+                {
+                    "type": "narration",
+                    "text": "A mochila está parcialmente organizada. Cadernos novos, lápis, canetas. Algumas coisas ainda faltam."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Mãe",
+                    "text": "Vou te levar até o portão. Não faz mal."
+                },
+                {
+                    "type": "set_character",
+                    "character": "mae.jpeg"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Pai",
+                    "text": "Deixa ele ir sozinho. Precisa se acostumar."
+                },
+                {
+                    "type": "set_character",
+                    "character": "pai.jpeg"
+                },
+                {
+                    "type": "narration",
+                    "text": "Os dois trocam um olhar rápido. Não há discussão."
+                },
+                {
+                    "type": "narration",
+                    "text": "Você arruma a mochila nas costas. Pesa mais do que deveria."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_leave_home"
+                }
+            ]
+        },
+        {
+            "id": "scene_leave_home",
+            "elements": [
+                {
+                    "type": "background",
+                    "value": "rua_fora_de_casa.jpeg"
+                },
+                {
+                    "type": "hide_all_characters"
+                },
+                {
+                    "type": "play_sfx",
+                    "filename": "wind_ambience.mp3"
+                },
+                {
+                    "type": "narration",
+                    "text": "Você sai de casa. O ar frio golpeia seu rosto, fazendo você fechar os olhos por um momento."
+                },
+                {
+                    "type": "narration",
+                    "text": "O céu está nublado, cinza opaco estendendo-se até onde a vista alcança. Não há sol hoje."
+                },
+                {
+                    "type": "narration",
+                    "text": "As casas do bairro são semelhantes, compactas, cercadas por muros baixos. Algumas têm luzes acesas mesmo sendo dia."
+                },
+                {
+                    "type": "narration",
+                    "text": "As ruas estão quase vazias. Um carro passa ocasionalmente, faróis cortando a névoa."
+                },
+                {
+                    "type": "narration",
+                    "text": "Você decide ir à escola logo, a pé. O caminho não é longo."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_meet_student"
+                }
+            ]
+        },
+        {
+            "id": "scene_meet_student",
+            "elements": [
+                {
+                    "type": "narration",
+                    "text": "A caminho, você avista alguém à frente. Um estudante do uniforme da sua nova escola."
+                },
+                {
+                    "type": "narration",
+                    "text": "Ele percebe sua aproximação e para, esperando. Uniforme impecável, postura relaxada."
+                },
+                {
+                    "type": "show_character",
+                    "position": "center",
+                    "expression": "neutral"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Aluno",
+                    "text": "Eaí! Você deve ser o novo aluno, né? Vi você na matrícula ontem."
+                },
+                {
+                    "type": "set_character",
+                    "character": "amigo.jpeg"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Aluno",
+                    "text": "Meu nome é..."
+                },
+                {
+                    "type": "set_character",
+                    "character": "amigo.jpeg"
+                },
+                {
+                    "type": "choices",
+                    "choices": [
+                        {
+                            "text": "Qual é o seu nome?",
+                            "target": "scene_student_name_enter"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "scene_student_name_enter",
+            "elements": [
+                {
+                    "type": "narration",
+                    "text": "O aluno sorri levemente e diz seu nome. Parece genuinamente disposto a conversar."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Aluno",
+                    "text": "E o seu? Não ouvi na matrícula."
+                },
+                {
+                    "type": "set_character",
+                    "character": "amigo.jpeg"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "[nome]",
+                    "text": "Meu nome é [nome]."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Aluno",
+                    "text": "[nome]. Legal. Bom conhecer você."
+                },
+                {
+                    "type": "set_character",
+                    "character": "amigo.jpeg"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Aluno",
+                    "text": "Então, está pronto para a Águia da Doom and despair? É... uma experiência, vamos dizer assim."
+                },
+                {
+                    "type": "set_character",
+                    "character": "amigo.jpeg"
+                },
+                {
+                    "type": "choices",
+                    "choices": [
+                        {
+                            "text": "Sobre a escola, é normal assim?",
+                            "target": "scene_ask_about_school"
+                        },
+                        {
+                            "text": "Vamos indo",
+                            "target": "scene_walk_to_gate"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "scene_ask_about_school",
+            "elements": [
+                {
+                    "type": "dialogue",
+                    "speaker": "Aluno",
+                    "text": "Normal? Hm. É... diferente. Mas você vai se acostumar. Todo mundo se acostuma."
+                },
+                {
+                    "type": "set_character",
+                    "character": "amigo.jpeg"
+                },
+                {
+                    "type": "narration",
+                    "text": "Há algo na resposta dele que parece deliberadamente vago."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Aluno",
+                    "text": "Melhor não falar muito aqui. Os muros têm ouvidos, sabe?"
+                },
+                {
+                    "type": "set_character",
+                    "character": "amigo.jpeg"
+                },
+                {
+                    "type": "narration",
+                    "text": "Ele ri, mas não há humor na risada."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_walk_to_gate"
+                }
+            ]
+        },
+        {
+            "id": "scene_walk_to_gate",
+            "elements": [
+                {
+                    "type": "narration",
+                    "text": "Vocês andam juntos até o portão da escola. O aluno não comenta mais sobre a instituição."
+                },
+                {
+                    "type": "narration",
+                    "text": "A escola aparece ao longe. Prédio antigo, paredes de tijolo exposto, janelas altas e estreitas."
+                },
+                {
+                    "type": "narration",
+                    "text": "Um portão de ferro alto, com detalhes ornamentais desgastados pelo tempo."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_school_gate"
+                }
+            ]
+        },
+        {
+            "id": "scene_school_gate",
+            "elements": [
+                {
+                    "type": "background",
+                    "value": "portao_escola.jpeg"
+                },
+                {
+                    "type": "hide_all_characters"
+                },
+                {
+                    "type": "play_music",
+                    "filename": "tense_ambient.mp3",
+                    "loop": true
+                },
+                {
+                    "type": "narration",
+                    "text": "Ao se aproximarem do portão, você nota alguns alunos parados na entrada."
+                },
+                {
+                    "type": "narration",
+                    "text": "Eles estão machucados. Olhos roxos, lábios inchados, arranhões nos braços. Não parecem brincadeira."
+                },
+                {
+                    "type": "narration",
+                    "text": "Um deles apoia-se no portão, sem força para ficar em pé. Outro tem a manga rasgada, revelando hematoma."
+                },
+                {
+                    "type": "narration",
+                    "text": "Um sentimento de perigo percorre suas costas. Algo está errado aqui."
+                },
+                {
+                    "type": "show_character",
+                    "position": "center",
+                    "expression": "neutral"
+                },
+                {
+                    "type": "choices",
+                    "choices": [
+                        {
+                            "text": "Verificar o que aconteceu",
+                            "target": "scene_check_injured_students"
+                        },
+                        {
+                            "text": "Ignorar e seguir para a sala",
+                            "target": "scene_ignore_injured_students"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "scene_check_injured_students",
+            "elements": [
+                {
+                    "type": "narration",
+                    "text": "Você decide se aproximar dos alunos machucados. Se algo aconteceu, alguém precisa saber."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Você",
+                    "text": "O que aconteceu com vocês?"
+                },
+                {
+                    "type": "narration",
+                    "text": "Os alunos viram-se em sua direção. O olhar deles é de... raiva. Agressividade pura."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Aluno machucado",
+                    "text": "Vaza daqui. Agora."
+                },
+                {
+                    "type": "set_character",
+                    "character": "alunos_machucados.jpeg"
+                },
+                {
+                    "type": "narration",
+                    "text": "Não há hesitação. Eles estão prontos para atacar se você insistir."
+                },
+                {
+                    "type": "narration",
+                    "text": "O aluno que acompanhou você puxa seu braço gentilmente."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Aluno",
+                    "text": "Vamos. Melhor não mexer."
+                },
+                {
+                    "type": "set_character",
+                    "character": "amigo.jpeg"
+                },
+                {
+                    "type": "narration",
+                    "text": "Os alunos ficam bravos com você. Você marca seus rostos na memória."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_proceed_to_classroom"
+                }
+            ]
+        },
+        {
+            "id": "scene_ignore_injured_students",
+            "elements": [
+                {
+                    "type": "narration",
+                    "text": "Você decide ignorar o sentimento de perigo e seguir para a sala que passará o resto do ano."
+                },
+                {
+                    "type": "narration",
+                    "text": "Os alunos não reagem à sua passagem. Eles parecem presos em seus próprios mundos de dor."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Aluno",
+                    "text": "Bem que não foi mexer. Eles não são muito simpáticos quando se sentem provocados."
+                },
+                {
+                    "type": "set_character",
+                    "character": "amigo.jpeg"
+                },
+                {
+                    "type": "narration",
+                    "text": "Os alunos não ficam bravos com você. Mas a imagem deles permanece."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_proceed_to_classroom"
+                }
+            ]
+        },
+        {
+            "id": "scene_proceed_to_classroom",
+            "elements": [
+                {
+                    "type": "narration",
+                    "text": "Você entra no pátio da escola. O som de muitos alunos conversando preenche o ar."
+                },
+                {
+                    "type": "narration",
+                    "text": "A maioria parece normal. Rindo, conversando, correndo. Mas há algo no ambiente."
+                },
+                {
+                    "type": "narration",
+                    "text": "Como se tudo fosse superficial. Uma fachada."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_classroom_entrance"
+                }
+            ]
+        },
+        {
+            "id": "scene_classroom_entrance",
+            "elements": [
+                {
+                    "type": "narration",
+                    "text": "Você encontra sua sala. O número está na porta: 1-B."
+                },
+                {
+                    "type": "narration",
+                    "text": "Ao entrar, as conversas diminuem ligeiramente. Olhares se voltam para você."
+                },
+                {
+                    "type": "narration",
+                    "text": "Alguns curiosos. Outros indiferentes. Alguns... estranhamente vazios."
+                },
+                {
+                    "type": "narration",
+                    "text": "Você procura um lugar. A sala está quase cheia."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_classroom_intro"
+                }
+            ]
+        },
+        {
+            "id": "scene_classroom_intro",
+            "elements": [
+                {
+                    "type": "narration",
+                    "text": "Na sala encontra uma variedade de pessoas e grupos. Três amigas conversando num canto, garotos jogando papel, alguém sozinho lendo."
+                },
+                {
+                    "type": "narration",
+                    "text": "Você sentia falta disso, já que há uns anos estudava em casa. Aulas particulares, isolamento."
+                },
+                {
+                    "type": "narration",
+                    "text": "Agora está de volta. Mas é o mesmo que você se lembrava?"
+                },
+                {
+                    "type": "show_character",
+                    "position": "center",
+                    "expression": "neutral"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Professor",
+                    "text": "Você deve ser [nome], bem-vindo à escola Águia da Doom and despair - você vai gostar daqui."
+                },
+                {
+                    "type": "set_character",
+                    "character": "professor.jpeg"
+                },
+                {
+                    "type": "narration",
+                    "text": "O professor se apresenta. Olhos escuros de sono, voz cansada, ombros curvados como se carregasse peso invisível."
+                },
+                {
+                    "type": "narration",
+                    "text": "Ele aponta para uma carteira toda vandalizada, ao lado de uma janela embaçada pelo clima frio e úmido."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Professor",
+                    "text": "Sente-se ali. A carteira está... disponível."
+                },
+                {
+                    "type": "set_character",
+                    "character": "professor.jpeg"
+                },
+                {
+                    "type": "narration",
+                    "text": "Há algo na forma como ele diz 'disponível' que sugere outro significado."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_walk_to_desk"
+                }
+            ]
+        },
+        {
+            "id": "scene_walk_to_desk",
+            "elements": [
+                {
+                    "type": "background",
+                    "value": "mesa_ningem_sai_daqui.jpeg"
+                },
+                {
+                    "type": "hide_character",
+                    "position": "center"
+                },
+                {
+                    "type": "narration",
+                    "text": "Ao caminhar para a carteira você sente os olhares e risos dos alunos pesando em suas costas."
+                },
+                {
+                    "type": "narration",
+                    "text": "Alguns curiosos, outros apenas e estranhamente vazios. Como se não estivessem lá de verdade."
+                },
+                {
+                    "type": "narration",
+                    "text": "A carteira tem arranhões profundos. Marcas de giz que não saíram com limpeza. Palavras apagadas tentando ser lidas."
+                },
+                {
+                    "type": "narration",
+                    "text": "Você se senta. A cadeira range. O som ecoa mais alto do que deveria."
+                },
+                {
+                    "type": "narration",
+                    "text": "Ao se ajustar, consegue ver um rabisco pouco apagado pelo tempo na mesa."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Mensagem na mesa",
+                    "text": "ningem sai daqui o mesmo"
+                },
+                {
+                    "type": "narration",
+                    "text": "Você acha engraçado o erro de gramática, mas a mensagem atravessa sua mente como uma flecha encontrando o alvo."
+                },
+                {
+                    "type": "narration",
+                    "text": "Por um instante, todo o resto parece desaparecer. Os alunos, o professor, o som da sala."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_after_sitting"
+                }
+            ]
+        },
+        {
+            "id": "scene_after_sitting",
+            "elements": [
+                {
+                    "type": "narration",
+                    "text": "Você volta à realidade. O professor está no quadro, escrevendo a data."
+                },
+                {
+                    "type": "narration",
+                    "text": "O quadro está porcamente limpo. Escritas evidentes por baixo do giz fresco. Frases apagadas tentando ressurgir."
+                },
+                {
+                    "type": "narration",
+                    "text": "Os alunos ao seu redor conversam em sussurros. Você tenta ouvir, mas é impossível distinguir."
+                },
+                {
+                    "type": "narration",
+                    "text": "O aluno que te acompanhou desde a entrada está sentado algumas carteiras à frente. Ele não te olha."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_interruption"
+                }
+            ]
+        },
+        {
+            "id": "scene_interruption",
+            "elements": [
+                {
+                    "type": "play_sfx",
+                    "filename": "scream_distant.mp3"
+                },
+                {
+                    "type": "narration",
+                    "text": "Antes da frase ser completamente processada um grito abafado ecoa no corredor."
+                },
+                {
+                    "type": "narration",
+                    "text": "O som é breve, mas claro. Alguém gritou. E não foi de alegria."
+                },
+                {
+                    "type": "narration",
+                    "text": "A conversa na sala para instantaneamente. Todos olham para a porta."
+                },
+                {
+                    "type": "narration",
+                    "text": "O professor nem pisca. Continua escrevendo a data no quadro, com aquele som rangente do giz."
+                },
+                {
+                    "type": "narration",
+                    "text": "O quadro porcamente limpo, com escritas evidentes sobre ela. Como se não importasse."
+                },
+                {
+                    "type": "narration",
+                    "text": "O aluno que te acompanhou desde a entrada te lança um olhar rápido e tenso."
+                },
+                {
+                    "type": "narration",
+                    "text": "Ele está dizendo algo sem palavras. A sua sensação de perigo era apenas o começo."
+                },
+                {
+                    "type": "play_sfx",
+                    "filename": "bell_strident.mp3"
+                },
+                {
+                    "type": "narration",
+                    "text": "O sinal toca. Não para o fim da aula, mas com um toque longo e estridente que faz seus ouvidos zumbirem."
+                },
+                {
+                    "type": "narration",
+                    "text": "É um som diferente. Não o sinal normal. É... errado."
+                },
+                {
+                    "type": "end_chapter"
+                }
+            ]
+        }
+    ]
+}

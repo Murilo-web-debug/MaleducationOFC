@@ -1,0 +1,7 @@
+
+
+# Bloquear acesso a arquivos de configuração local
+<Files "database.local.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
