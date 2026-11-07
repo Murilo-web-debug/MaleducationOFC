@@ -143,7 +143,7 @@ const VNEngine = {
 
                         if (choice.target && !sceneIds.includes(choice.target)) {
                             // Destino pode apontar para cena posterior, não é erro grave
-                            console.warn('Maleducation: Escolha aponta para cena: ' + choice.target + ' (pode estar mais adiante)');
+                            // console.warn('Maleducation: Escolha aponta para cena: ' + choice.target + ' (pode estar mais adiante)');
                         }
                     }
                 }
@@ -151,7 +151,7 @@ const VNEngine = {
                 if (element.type === 'goto' && element.target) {
                     if (!sceneIds.includes(element.target)) {
                         // Destino pode apontar para cena posterior, não é erro grave
-                        console.warn('Maleducation: Goto aponta para cena: ' + element.target + ' (pode estar mais adiante)');
+                        // console.warn('Maleducation: Goto aponta para cena: ' + element.target + ' (pode estar mais adiante)');
                     }
                 }
             }
@@ -213,7 +213,7 @@ const VNEngine = {
             return;
         }
 
-        console.log('Maleducation: Executando elemento: ' + element.type);
+        // console.log('Maleducation: Executando elemento: ' + element.type);
 
         switch (element.type) {
             case 'narration':
@@ -255,8 +255,20 @@ const VNEngine = {
             case 'play_sfx':
                 this.executePlaySFX(element);
                 break;
+            case 'play_ambient':
+                this.executePlayAmbient(element);
+                break;
+            case 'stop_ambient':
+                this.executeStopAmbient();
+                break;
             case 'end_chapter':
                 this.executeEndChapter();
+                break;
+            case 'next_chapter':
+                this.executeNextChapter(element);
+                break;
+            case 'if_choice':
+                this.executeIfChoice(element);
                 break;
             default:
                 console.warn('Maleducation: Tipo de elemento desconhecido: ' + element.type);
@@ -338,6 +350,54 @@ const VNEngine = {
 
         if (this.callbacks.onEndChapter) {
             this.callbacks.onEndChapter();
+        }
+    },
+
+    // Executar transição para próximo capítulo
+    executeNextChapter: function(element) {
+        const nextChapterId = element.chapter || 'chapter_02';
+        console.log('Maleducation: Transição para capítulo: ' + nextChapterId);
+
+        // Limpar estado visual
+        if (this.callbacks.onHideAllCharacters) {
+            this.callbacks.onHideAllCharacters();
+        }
+
+        // Preservar escolhas feitas (loadChapter as reseta)
+        const preservedChoices = this.state.choicesMade;
+
+        // Carregar próximo capítulo
+        this.loadChapter(nextChapterId).then(success => {
+            if (success) {
+                this.state.choicesMade = preservedChoices;
+                this.start();
+            } else {
+                console.error('Maleducation: Erro ao carregar próximo capítulo');
+                alert('Erro ao carregar próximo capítulo');
+            }
+        });
+    },
+
+    // Executar narração condicional baseada em escolhas anteriores
+    executeIfChoice: function(element) {
+        const choiceText = element.choice_text || '';
+        const thenTarget = element.then || null;
+        const elseTarget = element.else || null;
+
+        // Verificar se a escolha foi feita
+        const choiceMade = this.state.choicesMade.some(choice => 
+            choice.text === choiceText || choice.target === choiceText
+        );
+
+        console.log('Maleducation: Verificando escolha "' + choiceText + '" - ' + (choiceMade ? 'feita' : 'não feita'));
+
+        if (choiceMade && thenTarget) {
+            this.goToScene(thenTarget);
+        } else if (!choiceMade && elseTarget) {
+            this.goToScene(elseTarget);
+        } else {
+            // Se não tiver destino, apenas avança
+            this.advanceElement();
         }
     },
 
@@ -444,12 +504,15 @@ const VNEngine = {
     // Executar mudança de personagem atual
     executeSetCharacter: function(element) {
         const character = element.character || null;
+        const position = element.position || null;
 
         if (character) {
-            console.log('Maleducation: Personagem atual definido: ' + character);
+            console.log('Maleducation: Personagem atual definido: ' + character + (position ? ' (' + position + ')' : ''));
             if (this.callbacks.onSetCharacter) {
-                this.callbacks.onSetCharacter(character);
+                this.callbacks.onSetCharacter(character, position);
             }
+        } else if (this.callbacks.onSetCharacter) {
+            this.callbacks.onSetCharacter(null, null);
         }
 
         this.advanceElement();
@@ -479,9 +542,33 @@ const VNEngine = {
     // Executar efeito sonoro
     executePlaySFX: function(element) {
         const filename = element.filename || null;
+        const loop = element.loop || false;
+        const volume = element.volume || 1.0;
 
         if (typeof VNSettings !== 'undefined') {
-            VNSettings.playSFX(filename);
+            VNSettings.playSFX(filename, loop, volume);
+        }
+
+        this.advanceElement();
+    },
+
+    // Executar ambiente
+    executePlayAmbient: function(element) {
+        const filename = element.filename || null;
+        const loop = element.loop !== false;
+        const volume = element.volume || 1.0;
+
+        if (typeof VNSettings !== 'undefined') {
+            VNSettings.playAmbient(filename, loop, volume);
+        }
+
+        this.advanceElement();
+    },
+
+    // Executar parar ambiente
+    executeStopAmbient: function() {
+        if (typeof VNSettings !== 'undefined') {
+            VNSettings.stopAllAmbient();
         }
 
         this.advanceElement();
@@ -551,10 +638,37 @@ const VNEngine = {
         this.executeCurrentElement();
     },
 
+    // Preparar transição para uma nova cena
+    prepareSceneTransition: function(scene) {
+        // Personagens da cena anterior não devem permanecer na tela.
+        // Cada cena redefine os seus personagens via set_character.
+        if (this.callbacks.onHideAllCharacters) {
+            this.callbacks.onHideAllCharacters();
+        }
+        if (this.callbacks.onSetCharacter) {
+            this.callbacks.onSetCharacter(null);
+        }
+
+        // Sincronizar áudio ambiente com a nova cena.
+        // Cenas sem elementos de áudio herdam o ambiente atual
+        // (continuação narrativa); cenas que declaram play_ambient
+        // substituem os ambientes que não lhes pertencem.
+        if (typeof VNSettings !== 'undefined' && scene && scene.elements) {
+            const ambientFiles = [];
+            scene.elements.forEach(function(el) {
+                if (el.type === 'play_ambient' && el.filename) ambientFiles.push(el.filename);
+            });
+            if (ambientFiles.length > 0) {
+                VNSettings.stopAmbientNotInScene(ambientFiles);
+            }
+        }
+    },
+
     // Avançar para a próxima cena
     advanceScene: function() {
         this.state.currentSceneIndex++;
         this.state.currentElementIndex = 0;
+        this.prepareSceneTransition(this.getCurrentScene());
         this.executeCurrentElement();
     },
 
@@ -624,6 +738,7 @@ const VNEngine = {
         this.state.currentElementIndex = 0;
 
         console.log('Maleducation: Indo para cena: ' + sceneId);
+        this.prepareSceneTransition(scene);
         this.executeCurrentElement();
 
         return true;

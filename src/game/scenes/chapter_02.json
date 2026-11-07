@@ -1,0 +1,634 @@
+{
+    "id": "chapter_02",
+    "title": "Capítulo 2",
+    "start_scene": "scene_corridor_empty",
+    "scenes": [
+        {
+            "id": "scene_corridor_empty",
+            "elements": [
+                {
+                    "type": "stop_music",
+                    "fade": true
+                },
+                {
+                    "type": "stop_ambient",
+                    "fade": true
+                },
+                {
+                    "type": "background",
+                    "value": "corredor_medonho.png"
+                },
+                {
+                    "type": "play_ambient",
+                    "filename": "Ambientesalade_aula.mp3",
+                    "loop": true,
+                    "volume": 0.3
+                },
+                {
+                    "type": "narration",
+                    "text": "Após aquela aula monótona e sem graça, chega a hora do intervalo."
+                },
+                {
+                    "type": "narration",
+                    "text": "Os corredores estão estranhamente vazios e com um cheiro estranho de salgadinho... aqueles bem baratos."
+                },
+                {
+                    "type": "narration",
+                    "text": "Além disso, você escuta um som maquinal, engrenagens rodando e sons de vapor saindo."
+                },
+                {
+                    "type": "narration",
+                    "text": "Você o segue, pois nem o seu colega que te acompanhou até a entrada estava por perto."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_corridor_walk"
+                }
+            ]
+        },
+        {
+            "id": "scene_corridor_walk",
+            "elements": [
+                {
+                    "type": "background",
+                    "value": "fim_do_corredor_com_a_porta_secreta.png"
+                },
+                {
+                    "type": "narration",
+                    "text": "Após a caminhada, tentando desviar dos papéis jogados pelo chão, você chega a uma porta."
+                },
+                {
+                    "type": "narration",
+                    "text": "É de madeira e nela está algo desenhado, mas sua origem é desconhecida para você."
+                },
+                {
+                    "type": "narration",
+                    "text": "O que sabe é que está escrito em cima do desenho:"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Porta",
+                    "text": "Goxtoso"
+                },
+                {
+                    "type": "narration",
+                    "text": "O que será isso? Uma piada?"
+                },
+                {
+                    "type": "narration",
+                    "text": "Mesmo vendo aquela porta medonha, você decide atravessá-la."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_secret_door_enter"
+                }
+            ]
+        },
+        {
+            "id": "scene_secret_door_enter",
+            "elements": [
+                {
+                    "type": "stop_ambient",
+                    "fade": true
+                },
+                {
+                    "type": "background",
+                    "value": "escadaria_assustadora.png"
+                },
+                {
+                    "type": "play_sfx",
+                    "filename": "Gritono_corredor.mp3",
+                    "volume": 0.4
+                },
+                {
+                    "type": "narration",
+                    "text": "Logo depois, encontra uma sala muito pequena com apenas uma escada que te leva ao subterrâneo da escola."
+                },
+                {
+                    "type": "narration",
+                    "text": "É então que percebe que o som que tinha escutado antes vem de lá, assim como o cheiro estranho."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_underground_descend"
+                }
+            ]
+        },
+        {
+            "id": "scene_underground_descend",
+            "elements": [
+                {
+                    "type": "background",
+                    "value": "entrada_fabrica.png"
+                },
+                {
+                    "type": "narration",
+                    "text": "Ao descer a escada, você se depara com uma fábrica inteira, mas ainda não conseguiu identificar do que se trata."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_underground_explore"
+                }
+            ]
+        },
+        {
+            "id": "scene_underground_explore",
+            "elements": [
+                {
+                    "type": "stop_sfx",
+                    "fade": true
+                },
+                {
+                    "type": "background",
+                    "value": "corredores_fabrica.png"
+                },
+                {
+                    "type": "play_ambient",
+                    "filename": "Ambientesalade_aula.mp3",
+                    "loop": true,
+                    "volume": 0.4
+                },
+                {
+                    "type": "narration",
+                    "text": "Ao andar mais um pouco, encontra o seu amigo de antes e outros alunos que tinha visto anteriormente."
+                },
+                {
+                    "type": "set_character",
+                    "character": "amigo_assustado"
+                },
+                {
+                    "type": "narration",
+                    "text": "Eles estão com um rosto de aflição."
+                },
+                {
+                    "type": "narration",
+                    "text": "Eles descobrem que alguém havia encontrado a fábrica e logo começam a persegui-lo."
+                },
+                {
+                    "type": "narration",
+                    "text": "Você corre também, mas deles."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_platform_climb"
+                }
+            ]
+        },
+        {
+            "id": "scene_platform_climb",
+            "elements": [
+                {
+                    "type": "stop_ambient",
+                    "fade": true
+                },
+                {
+                    "type": "background",
+                    "value": "fabrica_vista_de_cima.png"
+                },
+                {
+                    "type": "play_music",
+                    "filename": "Entradada_escola.mp3",
+                    "loop": true,
+                    "volume": 0.6
+                },
+                {
+                    "type": "narration",
+                    "text": "Ao subir algumas escadas, chega a uma plataforma alta e consegue finalmente enxergar o que é produzido naquele lugar."
+                },
+                {
+                    "type": "narration",
+                    "text": "Salgadinhos."
+                },
+                {
+                    "type": "narration",
+                    "text": "Centenas de embalagens passam por esteiras transportadoras. Máquinas enormes trabalham sem parar, produzindo e empacotando os mesmos salgadinhos que você sentia o cheiro desde os corredores da escola."
+                },
+                {
+                    "type": "narration",
+                    "text": "Em todas as embalagens existe uma mesma marca:"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Embalagem",
+                    "text": "GOXTOSO"
+                },
+                {
+                    "type": "narration",
+                    "text": "Você começa a perceber que aquela fábrica é muito maior do que imaginava. Existem diversos setores, corredores e plataformas metálicas conectando as diferentes partes da instalação."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_recognize_injured_students"
+                }
+            ]
+        },
+        {
+            "id": "scene_recognize_injured_students",
+            "elements": [
+                {
+                    "type": "narration",
+                    "text": "Mas algo chama sua atenção."
+                },
+                {
+                    "type": "narration",
+                    "text": "Entre os trabalhadores, você reconhece alguns dos alunos que havia visto na entrada da escola. Os mesmos que estavam machucados."
+                },
+                {
+                    "type": "set_character",
+                    "character": "alunos_machucados_neutro"
+                },
+                {
+                    "type": "if_choice",
+                    "choice_text": "Verificar o que aconteceu",
+                    "then": "scene_recognize_injured_investigated",
+                    "else": "scene_recognize_injured_ignored"
+                }
+            ]
+        },
+        {
+            "id": "scene_recognize_injured_investigated",
+            "elements": [
+                {
+                    "type": "narration",
+                    "text": "É irônico. Eles lhe disseram para não investigar, para não saber de nada. E agora você os vê aqui, trabalhando como se nada tivesse acontecido."
+                },
+                {
+                    "type": "narration",
+                    "text": "Aqueles rostos machucados que o confrontaram agora estão virados para as máquinas, movendo-se automaticamente."
+                },
+                {
+                    "type": "narration",
+                    "text": "Antes que consiga entender o que está acontecendo, uma voz familiar ecoa pela plataforma."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "???",
+                    "text": "Eu não acredito que você realmente chegou até aqui."
+                },
+                {
+                    "type": "narration",
+                    "text": "É o seu colega."
+                },
+                {
+                    "type": "set_character",
+                    "character": "amigo_bravo"
+                },
+                {
+                    "type": "narration",
+                    "text": "Ele está do outro lado da plataforma, acompanhado de outros alunos."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Aluno",
+                    "text": "Você não deveria ter descido."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_confrontation_dialogue"
+                }
+            ]
+        },
+        {
+            "id": "scene_recognize_injured_ignored",
+            "elements": [
+                {
+                    "type": "narration",
+                    "text": "É um choque puro. Você apenas passou por eles, sem saber o que tinha acontecido. Agora vê os mesmos rostos machucados trabalhando aqui."
+                },
+                {
+                    "type": "narration",
+                    "text": "A conexão é instantânea e perturbadora. Os alunos feridos no portão não eram vítimas de acaso. Eles eram... funcionários."
+                },
+                {
+                    "type": "narration",
+                    "text": "Antes que consiga entender o que está acontecendo, uma voz familiar ecoa pela plataforma."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "???",
+                    "text": "Eu não acredito que você realmente chegou até aqui."
+                },
+                {
+                    "type": "narration",
+                    "text": "É o seu colega."
+                },
+                {
+                    "type": "set_character",
+                    "character": "amigo_bravo"
+                },
+                {
+                    "type": "narration",
+                    "text": "Ele está do outro lado da plataforma, acompanhado de outros alunos."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Aluno",
+                    "text": "Você não deveria ter descido."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_confrontation_dialogue"
+                }
+            ]
+        },
+        {
+            "id": "scene_confrontation_dialogue",
+            "elements": [
+                {
+                    "type": "background",
+                    "value": "corredores_fabrica_proxima_a_saida.png"
+                },
+                {
+                    "type": "narration",
+                    "text": "Você tenta perguntar o que está acontecendo, mas ele parece não querer dar explicações."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Aluno",
+                    "text": "Não importa mais. Você viu demais."
+                },
+                {
+                    "type": "narration",
+                    "text": "Você olha ao redor, procurando alguma maneira de sair dali. A plataforma possui dois caminhos principais: um leva de volta às escadas por onde você veio, enquanto o outro segue em direção a uma área desconhecida da fábrica."
+                },
+                {
+                    "type": "narration",
+                    "text": "Você tenta retornar pelo caminho de onde veio, mas percebe que os alunos já estão bloqueando a passagem."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Você",
+                    "text": "Ei! Espera! Podemos conversar!"
+                },
+                {
+                    "type": "narration",
+                    "text": "Seu colega permanece parado, observando você."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Aluno",
+                    "text": "Conversar? Você realmente acha que pode simplesmente voltar para sua vidinha depois de descobrir isso?"
+                },
+                {
+                    "type": "narration",
+                    "text": "Sem outra alternativa, você começa a caminhar pelo outro lado da plataforma."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_platform_walk"
+                }
+            ]
+        },
+        {
+            "id": "scene_platform_walk",
+            "elements": [
+                {
+                    "type": "narration",
+                    "text": "O chão metálico range a cada passo. O barulho das máquinas continua ao fundo, misturado aos ruídos de vapor que escapam das tubulações."
+                },
+                {
+                    "type": "narration",
+                    "text": "Enquanto avança, percebe que aquele setor parece diferente do restante da fábrica."
+                },
+                {
+                    "type": "narration",
+                    "text": "As paredes são mais limpas, a iluminação é mais forte e há menos máquinas. Parece uma área administrativa."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_admin_corridor"
+                }
+            ]
+        },
+        {
+            "id": "scene_admin_corridor",
+            "elements": [
+                {
+                    "type": "background",
+                    "value": "corredores_fabrica_com_cartaz.png"
+                },
+                {
+                    "type": "narration",
+                    "text": "Ao atravessar uma porta metálica, encontra um corredor comprido."
+                },
+                {
+                    "type": "narration",
+                    "text": "Nas paredes existem diversos quadros e cartazes com imagens das embalagens de Goxtoso."
+                },
+                {
+                    "type": "narration",
+                    "text": "Alguns deles possuem frases motivacionais:"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Cartaz",
+                    "text": "GOXTOSO: ALIMENTANDO O FUTURO!"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Cartaz",
+                    "text": "UM ALUNO SATISFEITO É UM ALUNO PRODUTIVO!"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Cartaz",
+                    "text": "A QUALIDADE COMEÇA NA EDUCAÇÃO!"
+                },
+                {
+                    "type": "narration",
+                    "text": "Você começa a perceber que aquele lugar não é apenas uma fábrica clandestina. Existe alguma coisa muito maior por trás de tudo aquilo."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_director_door"
+                }
+            ]
+        },
+        {
+            "id": "scene_director_door",
+            "elements": [
+                {
+                    "type": "background",
+                    "value": "porta_do_escritorio_com_o_aviso.png"
+                },
+                {
+                    "type": "stop_music",
+                    "fade": true
+                },
+                {
+                    "type": "narration",
+                    "text": "No final do corredor, encontra uma porta grande e ornamentada. Diferentemente das outras, ela possui uma placa dourada:"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Placa",
+                    "text": "DIRETORIA GERAL — ACESSO RESTRITO."
+                },
+                {
+                    "type": "narration",
+                    "text": "De dentro, vem uma música alegre, completamente deslocada daquele ambiente."
+                },
+                {
+                    "type": "narration",
+                    "text": "Você hesita por alguns segundos, mas não parece haver outra saída."
+                },
+                {
+                    "type": "narration",
+                    "text": "Ao abrir a porta, encontra uma sala enorme."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_director_office"
+                }
+            ]
+        },
+        {
+            "id": "scene_director_office",
+            "elements": [
+                {
+                    "type": "background",
+                    "value": "escritorio_do_chefe_por_dentro.png"
+                },
+                {
+                    "type": "play_music",
+                    "filename": "Cafedamanha.mp3",
+                    "loop": true,
+                    "volume": 0.7
+                },
+                {
+                    "type": "narration",
+                    "text": "Há uma mesa de escritório, algumas estantes, um computador antigo e diversos quadros com fotografias da escola."
+                },
+                {
+                    "type": "narration",
+                    "text": "No centro da sala, uma cadeira de escritório está posicionada de costas para você."
+                },
+                {
+                    "type": "narration",
+                    "text": "Por alguns instantes, tudo permanece em silêncio."
+                },
+                {
+                    "type": "narration",
+                    "text": "Até que a cadeira começa a girar lentamente."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "???",
+                    "text": "Ora, ora..."
+                },
+                {
+                    "type": "narration",
+                    "text": "Uma voz aparentemente tranquila quebra o silêncio."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "???",
+                    "text": "Temos uma visita inesperada."
+                },
+                {
+                    "type": "narration",
+                    "text": "A cadeira termina de girar."
+                },
+                {
+                    "type": "set_character",
+                    "character": "chefe_goxtoso"
+                },
+                {
+                    "type": "narration",
+                    "text": "Ali está ele."
+                },
+                {
+                    "type": "narration",
+                    "text": "O SALGADINHO GOXTOSO."
+                },
+                {
+                    "type": "narration",
+                    "text": "Uma criatura com aparência de salgadinho, sentada confortavelmente em uma cadeira executiva."
+                },
+                {
+                    "type": "narration",
+                    "text": "Ele observa você por alguns segundos."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Salgadinho Goxtoso",
+                    "text": "Então você é o aluno novo..."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Salgadinho Goxtoso",
+                    "text": "Confesso que esperava alguém um pouco mais... crocante."
+                },
+                {
+                    "type": "narration",
+                    "text": "Você permanece em silêncio, tentando compreender o que está diante dos seus olhos."
+                },
+                {
+                    "type": "narration",
+                    "text": "Goxtoso se levanta lentamente."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Salgadinho Goxtoso",
+                    "text": "Sabe, temos um pequeno problema por aqui. Alguns alunos não conseguem compreender a importância de manter nossa produção funcionando."
+                },
+                {
+                    "type": "narration",
+                    "text": "Ele caminha ao redor da mesa."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Salgadinho Goxtoso",
+                    "text": "Mas você parece diferente."
+                },
+                {
+                    "type": "narration",
+                    "text": "Uma pequena pausa."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Salgadinho Goxtoso",
+                    "text": "Talvez possamos encontrar alguma utilidade para você."
+                },
+                {
+                    "type": "narration",
+                    "text": "Antes que consiga responder, ele interrompe:"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Salgadinho Goxtoso",
+                    "text": "Ah! Onde estão meus modos? Ainda nem me apresentei oficialmente."
+                },
+                {
+                    "type": "narration",
+                    "text": "Goxtoso abre os braços, como se estivesse recebendo um convidado importante."
+                },
+                {
+                    "type": "set_character",
+                    "character": "chefe_goxtoso_aberto"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Salgadinho Goxtoso",
+                    "text": "Seja muito bem-vindo à verdadeira administração da escola Águia da Doom and Despair!"
+                },
+                {
+                    "type": "narration",
+                    "text": "A tela começa a escurecer."
+                },
+                {
+                    "type": "narration",
+                    "text": "A última coisa que você consegue ouvir é a voz de Goxtoso:"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Salgadinho Goxtoso",
+                    "text": "Agora, que tal conversarmos sobre o seu futuro por aqui?"
+                },
+                {
+                    "type": "end_chapter"
+                }
+            ]
+        }
+    ]
+}

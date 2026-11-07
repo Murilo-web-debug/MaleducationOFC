@@ -7,12 +7,19 @@
             "id": "scene_home_wakeup",
             "elements": [
                 {
-                    "type": "background",
-                    "value": "quarto_desarrumado.jpeg"
+                    "type": "play_music",
+                    "filename": "Despertar.mp3",
+                    "loop": true,
+                    "volume": 0.7
                 },
                 {
                     "type": "play_sfx",
-                    "filename": "alarm_clock.mp3"
+                    "filename": "Despertador.mp3",
+                    "volume": 0.8
+                },
+                {
+                    "type": "background",
+                    "value": "quarto.jpeg"
                 },
                 {
                     "type": "narration",
@@ -31,22 +38,13 @@
                     "text": "Você se levanta e passa pela porta do quarto. Ali estão seus pais, como se estivessem esperando."
                 },
                 {
-                    "type": "show_character",
-                    "position": "center",
-                    "expression": "neutral"
-                },
-                {
                     "type": "dialogue",
                     "speaker": "Mãe",
                     "text": "Está pronto para seu primeiro dia de aula?"
                 },
                 {
                     "type": "set_character",
-                    "character": "mae.jpeg"
-                },
-                {
-                    "type": "set_character",
-                    "character": "mae.jpeg"
+                    "character": "mae_neutra"
                 },
                 {
                     "type": "choices",
@@ -67,22 +65,22 @@
             "id": "scene_home_wakeup_yes",
             "elements": [
                 {
+                    "type": "set_character",
+                    "character": "mae_feliz"
+                },
+                {
                     "type": "dialogue",
                     "speaker": "Mãe",
                     "text": "Que bom que está animado. Vai ser um bom começo."
                 },
                 {
                     "type": "set_character",
-                    "character": "mae.jpeg"
+                    "character": "pai_neutro"
                 },
                 {
                     "type": "dialogue",
                     "speaker": "Pai",
                     "text": "Gosto dessa energia. A gente vai precisar dela."
-                },
-                {
-                    "type": "set_character",
-                    "character": "pai.jpeg"
                 },
                 {
                     "type": "goto",
@@ -94,22 +92,22 @@
             "id": "scene_home_wakeup_no",
             "elements": [
                 {
+                    "type": "set_character",
+                    "character": "mae_triste"
+                },
+                {
                     "type": "dialogue",
                     "speaker": "Mãe",
                     "text": "Entendo que está nervoso, mas vai ficar tudo bem."
                 },
                 {
                     "type": "set_character",
-                    "character": "mae.jpeg"
+                    "character": "pai_neutro"
                 },
                 {
                     "type": "dialogue",
                     "speaker": "Pai",
                     "text": "É normal ter medo do desconhecido. Mas às vezes é preciso encarar mesmo assim."
-                },
-                {
-                    "type": "set_character",
-                    "character": "pai.jpeg"
                 },
                 {
                     "type": "goto",
@@ -121,13 +119,17 @@
             "id": "scene_home_parents_reaction",
             "elements": [
                 {
+                    "type": "set_character",
+                    "character": "pai_triste"
+                },
+                {
                     "type": "dialogue",
                     "speaker": "Pai",
                     "text": "Eu sei que é difícil encarar essa mudança repentina, mas é o melhor a ser feito depois do que aconteceu em nossa outra casa."
                 },
                 {
                     "type": "set_character",
-                    "character": "pai.jpeg"
+                    "character": "mae_neutra"
                 },
                 {
                     "type": "dialogue",
@@ -136,16 +138,12 @@
                 },
                 {
                     "type": "set_character",
-                    "character": "mae.jpeg"
+                    "character": "pai_neutro"
                 },
                 {
                     "type": "dialogue",
                     "speaker": "Pai",
                     "text": "Vamos lá comer algo antes de sair, estou morrendo de fome."
-                },
-                {
-                    "type": "set_character",
-                    "character": "pai.jpeg"
                 },
                 {
                     "type": "narration",
@@ -161,26 +159,29 @@
             "id": "scene_breakfast",
             "elements": [
                 {
+                    "type": "stop_music",
+                    "fade": true
+                },
+                {
+                    "type": "play_music",
+                    "filename": "Cafedamanha.mp3",
+                    "loop": true,
+                    "volume": 0.7,
+                    "delay": 2
+                },
+                {
+                    "type": "play_ambient",
+                    "filename": "Sonsde_cozinha.mp3",
+                    "loop": true,
+                    "volume": 0.5
+                },
+                {
                     "type": "background",
                     "value": "cozinha.jpeg"
                 },
                 {
-                    "type": "play_sfx",
-                    "filename": "kitchen_ambience.mp3"
-                },
-                {
                     "type": "narration",
                     "text": "A cozinha está relativamente organizada. O aroma de café recente ainda paira no ar. Seus pais já estão à mesa."
-                },
-                {
-                    "type": "show_character",
-                    "position": "left",
-                    "expression": "neutral"
-                },
-                {
-                    "type": "show_character",
-                    "position": "right",
-                    "expression": "neutral"
                 },
                 {
                     "type": "dialogue",
@@ -189,7 +190,7 @@
                 },
                 {
                     "type": "set_character",
-                    "character": "mae.jpeg"
+                    "character": "mae_neutra"
                 },
                 {
                     "type": "choices",
@@ -214,13 +215,17 @@
                     "text": "Você aceita o café. O líquido escuro quente enche a xícara, soltando vapor."
                 },
                 {
+                    "type": "set_character",
+                    "character": "pai_neutro"
+                },
+                {
                     "type": "dialogue",
                     "speaker": "Pai",
                     "text": "Ah, café. Me lembra quando você nem chegava perto da caneca."
                 },
                 {
                     "type": "set_character",
-                    "character": "pai.jpeg"
+                    "character": "mae_neutra"
                 },
                 {
                     "type": "dialogue",
@@ -228,12 +233,12 @@
                     "text": "O tempo passa rápido, não é? Antes mal podia ficar acordado de manhã."
                 },
                 {
-                    "type": "set_character",
-                    "character": "mae.jpeg"
-                },
-                {
                     "type": "narration",
                     "text": "Você toma o café em silêncio. O sabor amargo enche sua boca."
+                },
+                {
+                    "type": "set_character",
+                    "character": "pai_neutro"
                 },
                 {
                     "type": "dialogue",
@@ -242,16 +247,12 @@
                 },
                 {
                     "type": "set_character",
-                    "character": "pai.jpeg"
+                    "character": "mae_neutra"
                 },
                 {
                     "type": "dialogue",
                     "speaker": "Mãe",
                     "text": "É antiga. Fundada nos anos 90, se não me engano. Tem tradição."
-                },
-                {
-                    "type": "set_character",
-                    "character": "mae.jpeg"
                 },
                 {
                     "type": "narration",
@@ -271,22 +272,22 @@
                     "text": "Você recusa o café. Sua mãe pega um suco de caixinha do armário e lhe entrega."
                 },
                 {
+                    "type": "set_character",
+                    "character": "mae_neutra"
+                },
+                {
                     "type": "dialogue",
                     "speaker": "Mãe",
                     "text": "Sempre teve preferências particulares. É bom assim."
                 },
                 {
                     "type": "set_character",
-                    "character": "mae.jpeg"
+                    "character": "pai_neutro"
                 },
                 {
                     "type": "dialogue",
                     "speaker": "Pai",
                     "text": "Café para criança... Talvez seja melhor mesmo."
-                },
-                {
-                    "type": "set_character",
-                    "character": "pai.jpeg"
                 },
                 {
                     "type": "narration",
@@ -299,16 +300,12 @@
                 },
                 {
                     "type": "set_character",
-                    "character": "pai.jpeg"
+                    "character": "mae_neutra"
                 },
                 {
                     "type": "dialogue",
                     "speaker": "Mãe",
                     "text": "É antiga. Fundada nos anos 90, se não me engano. Tem tradição."
-                },
-                {
-                    "type": "set_character",
-                    "character": "mae.jpeg"
                 },
                 {
                     "type": "narration",
@@ -324,6 +321,10 @@
             "id": "scene_prepare_to_leave",
             "elements": [
                 {
+                    "type": "stop_music",
+                    "fade": true
+                },
+                {
                     "type": "narration",
                     "text": "O café da manhã termina em silêncio. Você se levanta e volta ao quarto para pegar sua mochila."
                 },
@@ -332,22 +333,22 @@
                     "text": "A mochila está parcialmente organizada. Cadernos novos, lápis, canetas. Algumas coisas ainda faltam."
                 },
                 {
+                    "type": "set_character",
+                    "character": "mae_neutra"
+                },
+                {
                     "type": "dialogue",
                     "speaker": "Mãe",
                     "text": "Vou te levar até o portão. Não faz mal."
                 },
                 {
                     "type": "set_character",
-                    "character": "mae.jpeg"
+                    "character": "pai_bravo"
                 },
                 {
                     "type": "dialogue",
                     "speaker": "Pai",
                     "text": "Deixa ele ir sozinho. Precisa se acostumar."
-                },
-                {
-                    "type": "set_character",
-                    "character": "pai.jpeg"
                 },
                 {
                     "type": "narration",
@@ -367,15 +368,20 @@
             "id": "scene_leave_home",
             "elements": [
                 {
+                    "type": "play_music",
+                    "filename": "Caminhoatea_escola.mp3",
+                    "loop": true,
+                    "volume": 0.7
+                },
+                {
+                    "type": "play_ambient",
+                    "filename": "Ambienteexterno.mp3",
+                    "loop": true,
+                    "volume": 0.4
+                },
+                {
                     "type": "background",
-                    "value": "rua_fora_de_casa.jpeg"
-                },
-                {
-                    "type": "hide_all_characters"
-                },
-                {
-                    "type": "play_sfx",
-                    "filename": "wind_ambience.mp3"
+                    "value": "rua.jpeg"
                 },
                 {
                     "type": "narration",
@@ -415,18 +421,13 @@
                     "text": "Ele percebe sua aproximação e para, esperando. Uniforme impecável, postura relaxada."
                 },
                 {
-                    "type": "show_character",
-                    "position": "center",
-                    "expression": "neutral"
-                },
-                {
                     "type": "dialogue",
                     "speaker": "Aluno",
                     "text": "Eaí! Você deve ser o novo aluno, né? Vi você na matrícula ontem."
                 },
                 {
                     "type": "set_character",
-                    "character": "amigo.jpeg"
+                    "character": "amigo_neutro"
                 },
                 {
                     "type": "dialogue",
@@ -435,7 +436,7 @@
                 },
                 {
                     "type": "set_character",
-                    "character": "amigo.jpeg"
+                    "character": "amigo_neutro"
                 },
                 {
                     "type": "choices",
@@ -462,7 +463,7 @@
                 },
                 {
                     "type": "set_character",
-                    "character": "amigo.jpeg"
+                    "character": "amigo_neutro"
                 },
                 {
                     "type": "dialogue",
@@ -476,7 +477,7 @@
                 },
                 {
                     "type": "set_character",
-                    "character": "amigo.jpeg"
+                    "character": "amigo_neutro"
                 },
                 {
                     "type": "dialogue",
@@ -485,7 +486,7 @@
                 },
                 {
                     "type": "set_character",
-                    "character": "amigo.jpeg"
+                    "character": "amigo_neutro"
                 },
                 {
                     "type": "choices",
@@ -512,7 +513,7 @@
                 },
                 {
                     "type": "set_character",
-                    "character": "amigo.jpeg"
+                    "character": "amigo_assustado"
                 },
                 {
                     "type": "narration",
@@ -525,7 +526,7 @@
                 },
                 {
                     "type": "set_character",
-                    "character": "amigo.jpeg"
+                    "character": "amigo_neutro"
                 },
                 {
                     "type": "narration",
@@ -562,16 +563,30 @@
             "id": "scene_school_gate",
             "elements": [
                 {
-                    "type": "background",
-                    "value": "portao_escola.jpeg"
+                    "type": "stop_music",
+                    "fade": true
                 },
                 {
-                    "type": "hide_all_characters"
+                    "type": "stop_sfx",
+                    "fade": true
                 },
                 {
                     "type": "play_music",
-                    "filename": "tense_ambient.mp3",
-                    "loop": true
+                    "filename": "Entradada_escola.mp3",
+                    "loop": true,
+                    "volume": 0.7,
+                    "delay": 2
+                },
+                {
+                    "type": "play_ambient",
+                    "filename": "Ambiente_escolar_externo.mp3",
+                    "loop": true,
+                    "volume": 0.4,
+                    "delay": 2
+                },
+                {
+                    "type": "background",
+                    "value": "entrada_escola.jpeg"
                 },
                 {
                     "type": "narration",
@@ -588,11 +603,6 @@
                 {
                     "type": "narration",
                     "text": "Um sentimento de perigo percorre suas costas. Algo está errado aqui."
-                },
-                {
-                    "type": "show_character",
-                    "position": "center",
-                    "expression": "neutral"
                 },
                 {
                     "type": "choices",
@@ -617,6 +627,10 @@
                     "text": "Você decide se aproximar dos alunos machucados. Se algo aconteceu, alguém precisa saber."
                 },
                 {
+                    "type": "set_character",
+                    "character": "alunos_machucados_neutro"
+                },
+                {
                     "type": "dialogue",
                     "speaker": "Você",
                     "text": "O que aconteceu com vocês?"
@@ -631,10 +645,6 @@
                     "text": "Vaza daqui. Agora."
                 },
                 {
-                    "type": "set_character",
-                    "character": "alunos_machucados.jpeg"
-                },
-                {
                     "type": "narration",
                     "text": "Não há hesitação. Eles estão prontos para atacar se você insistir."
                 },
@@ -643,17 +653,83 @@
                     "text": "O aluno que acompanhou você puxa seu braço gentilmente."
                 },
                 {
+                    "type": "set_character",
+                    "character": "amigo_assustado"
+                },
+                {
                     "type": "dialogue",
                     "speaker": "Aluno",
                     "text": "Vamos. Melhor não mexer."
                 },
                 {
+                    "type": "narration",
+                    "text": "Os alunos ficam bravos com você. Você marca seus rostos na memória."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_student_confrontation"
+                }
+            ]
+        },
+        {
+            "id": "scene_student_confrontation",
+            "elements": [
+                {
+                    "type": "narration",
+                    "text": "No caminho para a sala, uma voz seca corta o ar antes mesmo de você virar a esquina."
+                },
+                {
                     "type": "set_character",
-                    "character": "amigo.jpeg"
+                    "character": "alunos_machucados_neutro"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Aluno machucado",
+                    "text": "Ei. Novo."
                 },
                 {
                     "type": "narration",
-                    "text": "Os alunos ficam bravos com você. Você marca seus rostos na memória."
+                    "text": "Os alunos que você perguntou bloqueiam a passagem. Rostos marcados por olheiras roxas, gestos lentos, mas olhos atentos. Não são jovens comuns."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Aluno machucado",
+                    "text": "Você não devia ter feito perguntas."
+                },
+                {
+                    "type": "narration",
+                    "text": "O que você viu no portão não era briga de corredor. Havia algo deliberado naquilo — e eles sabem que você percebeu."
+                },
+                {
+                    "type": "set_character",
+                    "character": "amigo_assustado"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Aluno",
+                    "text": "[nome], vamos. Eles não são seus amigos."
+                },
+                {
+                    "type": "set_character",
+                    "character": "alunos_machucados_neutro"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Aluno machucado",
+                    "text": "Escuta bem, calouro. Tem coisas nesta escola que é melhor não saber. E tem gente que não gosta quando os outros sabem."
+                },
+                {
+                    "type": "narration",
+                    "text": "Eles se afastam devagar, sem pressa, como quem já venceu essa discussão antes."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Aluno machucado",
+                    "text": "Se aparecer de novo perto da gente... a gente lembra que você é novo."
+                },
+                {
+                    "type": "narration",
+                    "text": "Você passa. Atrás de você, os passos deles continuam — lentos, arrastados, como os próprios corpos."
                 },
                 {
                     "type": "goto",
@@ -679,7 +755,7 @@
                 },
                 {
                     "type": "set_character",
-                    "character": "amigo.jpeg"
+                    "character": "amigo_neutro"
                 },
                 {
                     "type": "narration",
@@ -716,6 +792,32 @@
             "id": "scene_classroom_entrance",
             "elements": [
                 {
+                    "type": "stop_music",
+                    "fade": true
+                },
+                {
+                    "type": "stop_sfx",
+                    "fade": true
+                },
+                {
+                    "type": "play_music",
+                    "filename": "Saladeaula.mp3",
+                    "loop": true,
+                    "volume": 0.7,
+                    "delay": 2
+                },
+                {
+                    "type": "play_ambient",
+                    "filename": "Ambientesalade_aula.mp3",
+                    "loop": true,
+                    "volume": 0.4,
+                    "delay": 2
+                },
+                {
+                    "type": "background",
+                    "value": "sala_de_aula.jpeg"
+                },
+                {
                     "type": "narration",
                     "text": "Você encontra sua sala. O número está na porta: 1-B."
                 },
@@ -741,6 +843,16 @@
             "id": "scene_classroom_intro",
             "elements": [
                 {
+                    "type": "play_sfx",
+                    "filename": "Giznoquadro.mp3",
+                    "volume": 0.6
+                },
+                {
+                    "type": "play_sfx",
+                    "filename": "Cadeirarangendo.mp3",
+                    "volume": 0.5
+                },
+                {
                     "type": "narration",
                     "text": "Na sala encontra uma variedade de pessoas e grupos. Três amigas conversando num canto, garotos jogando papel, alguém sozinho lendo."
                 },
@@ -753,18 +865,13 @@
                     "text": "Agora está de volta. Mas é o mesmo que você se lembrava?"
                 },
                 {
-                    "type": "show_character",
-                    "position": "center",
-                    "expression": "neutral"
+                    "type": "set_character",
+                    "character": "professor_nervoso"
                 },
                 {
                     "type": "dialogue",
                     "speaker": "Professor",
                     "text": "Você deve ser [nome], bem-vindo à escola Águia da Doom and despair - você vai gostar daqui."
-                },
-                {
-                    "type": "set_character",
-                    "character": "professor.jpeg"
                 },
                 {
                     "type": "narration",
@@ -775,13 +882,17 @@
                     "text": "Ele aponta para uma carteira toda vandalizada, ao lado de uma janela embaçada pelo clima frio e úmido."
                 },
                 {
+                    "type": "set_character",
+                    "character": "professor_tenso"
+                },
+                {
                     "type": "dialogue",
                     "speaker": "Professor",
                     "text": "Sente-se ali. A carteira está... disponível."
                 },
                 {
                     "type": "set_character",
-                    "character": "professor.jpeg"
+                    "character": "professor_neutro"
                 },
                 {
                     "type": "narration",
@@ -798,11 +909,7 @@
             "elements": [
                 {
                     "type": "background",
-                    "value": "mesa_ningem_sai_daqui.jpeg"
-                },
-                {
-                    "type": "hide_character",
-                    "position": "center"
+                    "value": "mesa_escrito_ningem_sai_daqui_o_mesmo.jpeg"
                 },
                 {
                     "type": "narration",
@@ -873,7 +980,17 @@
             "elements": [
                 {
                     "type": "play_sfx",
-                    "filename": "scream_distant.mp3"
+                    "filename": "Gritono_corredor.mp3",
+                    "volume": 0.9
+                },
+                {
+                    "type": "play_music",
+                    "filename": "Sinal_escolaranormal.mp3",
+                    "volume": 0.8
+                },
+                {
+                    "type": "set_character",
+                    "character": "professor_tenso"
                 },
                 {
                     "type": "narration",
@@ -904,10 +1021,6 @@
                     "text": "Ele está dizendo algo sem palavras. A sua sensação de perigo era apenas o começo."
                 },
                 {
-                    "type": "play_sfx",
-                    "filename": "bell_strident.mp3"
-                },
-                {
                     "type": "narration",
                     "text": "O sinal toca. Não para o fim da aula, mas com um toque longo e estridente que faz seus ouvidos zumbirem."
                 },
@@ -916,7 +1029,163 @@
                     "text": "É um som diferente. Não o sinal normal. É... errado."
                 },
                 {
-                    "type": "end_chapter"
+                    "type": "goto",
+                    "target": "scene_after_bell"
+                }
+            ]
+        },
+        {
+            "id": "scene_after_bell",
+            "elements": [
+                {
+                    "type": "narration",
+                    "text": "O sinal errado não para de tocar. Ou para — você não tem certeza de quando ele cessa."
+                },
+                {
+                    "type": "narration",
+                    "text": "Os alunos saem em silêncio, em filas lentas, sem a algazarra de sempre. Como se estivessem saindo de um velório."
+                },
+                {
+                    "type": "narration",
+                    "text": "No mural do corredor, entre avisos de prova e festinha junina, há cartazes novos: \"Semana do Salgadinho\", \"Colabore com a cantina\", \"Uma escola mais gostosa\"."
+                },
+                {
+                    "type": "narration",
+                    "text": "Em todos eles, no canto inferior direito, o mesmo desenho se repete: um símbolo estranho: a silhueta de um bode de chifres curvos, desenhado com traço propositalmente infantil."
+                },
+                {
+                    "type": "narration",
+                    "text": "Nenhum cartaz tem autor. Nenhum tem data. Eles simplesmente estão lá, como se sempre tivessem estado."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_corridor_clues"
+                }
+            ]
+        },
+        {
+            "id": "scene_corridor_clues",
+            "elements": [
+                {
+                    "type": "narration",
+                    "text": "No caminho de saída, um funcionário de jaleco cinza aponta alunos para as salas com uma precisão desconfortável — ele sabe o nome de cada um, a turma de cada um, até quem faltou hoje."
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Funcionário",
+                    "text": "Sala 1-B é por ali. E lembrem: saída só pelo portão principal. Não inventem atalhos."
+                },
+                {
+                    "type": "narration",
+                    "text": "É uma frase comum. Mas ele diz olhando para você — como se soubesse exatamente por onde você estava pensando em passar."
+                },
+                {
+                    "type": "narration",
+                    "text": "Perto da secretaria, uma folha de papel está encaixada no quadro de avisos: um ofício com timbre que você não reconhece, carimbo borrado, e no rodapé o mesmo um símbolo estranho: a silhueta de um bode de chifres curvos, desenhado com traço propositalmente infantil."
+                },
+                {
+                    "type": "narration",
+                    "text": "O texto é administrativo demais para decifrar de relance. Só uma frase chama atenção: \"...o setor responsável reforça que a permanência dos alunos dentro do perímetro é obrigatória até segunda ordem.\""
+                },
+                {
+                    "type": "narration",
+                    "text": "Obrigatória. Até segunda ordem. Ninguém menciona saída antecipada. Ninguém menciona para onde iriam se saíssem."
+                },
+                {
+                    "type": "narration",
+                    "text": "No documento, abaixo do carimbo borrado, duas palavras quase apagadas: 'Salgadinho Goxtoso'. O nome soa familiar, mas você não sabe de onde."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_mystery_hook"
+                }
+            ]
+        },
+        {
+            "id": "scene_mystery_hook",
+            "elements": [
+                {
+                    "type": "narration",
+                    "text": "Ao passar pela carteira onde você sentou, algo no rabisco te faz parar."
+                },
+                {
+                    "type": "narration",
+                    "text": "Ao lado de \"ningem sai daqui o mesmo\", quase escondido entre os arranhões, há um desenho pequeno: o mesmo bode de chifres curvos dos cartazes."
+                },
+                {
+                    "type": "narration",
+                    "text": "Alguém escreveu a frase na carteira. E alguém — ou o mesmo alguém — desenhou o bode ao lado."
+                },
+                {
+                    "type": "narration",
+                    "text": "Quem escreveu aquilo conhecia a mensagem antes de ela existir ali. Ou a mensagem já existia em outro lugar, e a carteira foi só mais um lugar onde ela vazou."
+                },
+                {
+                    "type": "narration",
+                    "text": "Você guarda isso no fundo da cabeça. Mas a imagem do bode não sai do lugar."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_friend_leaves"
+                }
+            ]
+        },
+        {
+            "id": "scene_friend_leaves",
+            "elements": [
+                {
+                    "type": "set_character",
+                    "character": "amigo_assustado"
+                },
+                {
+                    "type": "dialogue",
+                    "speaker": "Aluno",
+                    "text": "Preciso ir... resolver umas coisas. Encontre você depois."
+                },
+                {
+                    "type": "narration",
+                    "text": "Ele sai rápido, sem esperar resposta. Você fica sozinho no corredor."
+                },
+                {
+                    "type": "narration",
+                    "text": "É então que você percebe algo diferente no ar. Um cheiro leve, artificial, remetendo a salgadinhos baratos."
+                },
+                {
+                    "type": "narration",
+                    "text": "E vindo de algum lugar abaixo, um som rítmico e distante, como engrenagens girando no escuro."
+                },
+                {
+                    "type": "narration",
+                    "text": "O sinal era para o intervalo. A aula ainda não acabou."
+                },
+                {
+                    "type": "goto",
+                    "target": "scene_chapter1_end"
+                }
+            ]
+        },
+        {
+            "id": "scene_chapter1_end",
+            "elements": [
+                {
+                    "type": "narration",
+                    "text": "Você tem algum tempo antes da próxima aula. O corredor está estranhamente vazio."
+                },
+                {
+                    "type": "narration",
+                    "text": "O cheiro de salgadinho parece ficar mais forte em uma direção específica."
+                },
+                {
+                    "type": "narration",
+                    "text": "O som mecânico também parece vir de lá."
+                },
+                {
+                    "type": "narration",
+                    "text": "Algo diz que você não deveria seguir por ali. Mas algo mais forte diz que precisa saber."
+                },
+                {
+                    "type": "next_chapter",
+                    "chapter": "chapter_02"
                 }
             ]
         }

@@ -8,9 +8,12 @@ const VNSettings = {
     defaults: {
         musicVolume: 0.7,
         sfxVolume: 0.8,
+        ambientVolume: 0.4,
         textSpeed: 30,
         instantText: false,
-        autoAdvance: false
+        autoAdvance: false,
+        dialogueOpacity: 0.9,
+        dialogueTheme: 'auto' // 'auto' | 'dark' | 'light'
     },
 
     // Configurações atuais
@@ -19,7 +22,8 @@ const VNSettings = {
     // Elementos de áudio
     audio: {
         music: null,
-        sfx: {}
+        sfx: {},
+        ambient: {}
     },
 
     // Inicialização
@@ -65,6 +69,12 @@ const VNSettings = {
         // Atualizar volumes de áudio
         this.updateVolumes();
 
+        // Atualizar transparência da caixa de diálogo
+        this.updateDialogueOpacity();
+
+        // Atualizar tema dos diálogos
+        this.applyDialogueTheme();
+
         // Se necessário, notificar o motor sobre mudanças
         if (typeof VNEngine !== 'undefined') {
             VNEngine.state.typingSpeed = this.settings.textSpeed;
@@ -82,6 +92,43 @@ const VNSettings = {
                 this.audio.sfx[key].volume = this.settings.sfxVolume;
             }
         }
+
+        for (const key in this.audio.ambient) {
+            if (this.audio.ambient[key]) {
+                this.audio.ambient[key].volume = this.settings.ambientVolume;
+            }
+        }
+    },
+
+    // Atualizar transparência da caixa de diálogo
+    updateDialogueOpacity: function() {
+        const dialogue = document.getElementById('vn-dialogue');
+        if (dialogue) {
+            const opacity = this.settings.dialogueOpacity;
+            // Controla o alpha do gradiente de fundo via CSS variable.
+            // Textos e botões não são afetados (têm cores próprias).
+            dialogue.style.setProperty('--dialogue-opacity', opacity);
+        }
+    },
+
+    // Aplicar tema dos diálogos ('auto' usa a luminância do background atual)
+    applyDialogueTheme: function() {
+        const dialogue = document.getElementById('vn-dialogue');
+        if (!dialogue) return;
+
+        let theme = this.settings.dialogueTheme || 'auto';
+
+        if (theme === 'auto') {
+            // Usa a luminância do background calculada pela interface.
+            // Padrão: escuro (texto claro), que é legível na maioria das cenas.
+            const luminance = (typeof VNInterface !== 'undefined' && VNInterface.state)
+                ? VNInterface.state.bgLuminance
+                : null;
+            theme = (luminance !== null && luminance > 140) ? 'light' : 'dark';
+        }
+
+        dialogue.classList.toggle('vn-theme-light', theme === 'light');
+        dialogue.classList.toggle('vn-theme-dark', theme === 'dark');
     },
 
     // Obter configuração
@@ -96,10 +143,23 @@ const VNSettings = {
         this.apply();
     },
 
+    // Restaurar configurações padrão
+    reset: function() {
+        this.settings = { ...this.defaults };
+        this.save();
+        this.apply();
+        console.log('Maleducation: Configurações restauradas para padrão');
+    },
+
     // Tocar música de fundo
     playMusic: function(filename, loop = true) {
         if (!filename) {
             this.stopMusic();
+            return;
+        }
+
+        // Se a mesma faixa já estiver tocando, não reiniciar
+        if (this.audio.musicFilename === filename && this.audio.music) {
             return;
         }
 
@@ -110,6 +170,7 @@ const VNSettings = {
         this.audio.music = new Audio('/teste/public/assets/music/' + filename);
         this.audio.music.volume = this.settings.musicVolume;
         this.audio.music.loop = loop;
+        this.audio.musicFilename = filename;
 
         // Tentar tocar
         this.audio.music.play().catch(e => {
@@ -123,23 +184,32 @@ const VNSettings = {
             this.audio.music.pause();
             this.audio.music = null;
         }
+        this.audio.musicFilename = null;
     },
 
     // Tocar efeito sonoro
-    playSFX: function(filename) {
+    playSFX: function(filename, loop = false, volume = 1.0) {
         if (!filename) return;
 
+        // Não reiniciar efeito em loop que já esteja ativo
+        if (loop && this.audio.sfx[filename]) {
+            return;
+        }
+
         const sfx = new Audio('/teste/public/assets/sounds/' + filename);
-        sfx.volume = this.settings.sfxVolume;
+        sfx.volume = this.settings.sfxVolume * volume;
+        sfx.loop = loop;
 
         sfx.play().catch(e => {
             console.warn('Maleducation: Não foi possível tocar efeito sonoro:', filename, e);
         });
 
-        // Limpar referência após tocar
-        sfx.onended = () => {
-            delete this.audio.sfx[filename];
-        };
+        // Limpar referência após tocar (se não for loop)
+        if (!loop) {
+            sfx.onended = () => {
+                delete this.audio.sfx[filename];
+            };
+        }
 
         this.audio.sfx[filename] = sfx;
     },
@@ -154,10 +224,81 @@ const VNSettings = {
         }
     },
 
+    // Tocar ambiente
+    playAmbient: function(filename, loop = true, volume = 1.0) {
+        if (!filename) return;
+
+        // Se já estiver tocando, não recarregar
+        if (this.audio.ambient[filename]) {
+            return;
+        }
+
+        const ambient = new Audio('/teste/public/assets/sounds/' + filename);
+        ambient.volume = this.settings.ambientVolume * volume;
+        ambient.loop = loop;
+
+        ambient.play().catch(e => {
+            console.warn('Maleducation: Não foi possível tocar ambiente:', filename, e);
+        });
+
+        this.audio.ambient[filename] = ambient;
+    },
+
+    // Parar ambiente específico
+    stopAmbient: function(filename) {
+        if (this.audio.ambient[filename]) {
+            this.audio.ambient[filename].pause();
+            delete this.audio.ambient[filename];
+        }
+    },
+
+    // Parar todos os ambientes
+    stopAllAmbient: function() {
+        for (const key in this.audio.ambient) {
+            if (this.audio.ambient[key]) {
+                this.audio.ambient[key].pause();
+                delete this.audio.ambient[key];
+            }
+        }
+    },
+
     // Parar todo o áudio
     stopAll: function() {
         this.stopMusic();
         this.stopAllSFX();
+        this.stopAllAmbient();
+    },
+
+    // Fade-out rápido de um elemento de áudio antes de pausá-lo
+    fadeOutAndStop: function(audioEl, duration = 400) {
+        if (!audioEl) return;
+        const steps = 10;
+        const stepTime = duration / steps;
+        const startVolume = audioEl.volume;
+        let step = 0;
+        const timer = setInterval(() => {
+            step++;
+            audioEl.volume = Math.max(0, startVolume * (1 - step / steps));
+            if (step >= steps) {
+                clearInterval(timer);
+                audioEl.pause();
+                audioEl.volume = startVolume;
+            }
+        }, stepTime);
+    },
+
+    // Parar ambientes que não pertencem à nova cena.
+    // Chamado apenas quando a nova cena declara seus próprios
+    // play_ambient; cenas sem áudio próprio mantêm o ambiente atual.
+    stopAmbientNotInScene: function(ambientFiles) {
+        ambientFiles = ambientFiles || [];
+
+        for (const key in this.audio.ambient) {
+            if (ambientFiles.indexOf(key) === -1) {
+                this.fadeOutAndStop(this.audio.ambient[key]);
+                delete this.audio.ambient[key];
+            }
+        }
     },
 
     // Restaurar configurações padrão

@@ -26,7 +26,13 @@ $username = getCurrentUsername();
             </div>
             <div class="retro-window-content">
                 <div class="logo-area">
-                    <div class="logo-placeholder">MALEDUCATION</div>
+                    <img src="/teste/public/assets/logo/logo.png" alt="Maleducation" class="logo-img">
+                </div>
+
+                <div class="game-description">
+                    Uma visual novel de suspense psicológico ambientada em uma escola
+                    com uma atmosfera sombria e misteriosa. Faça escolhas, descubra
+                    segredos e sobreviva ao que espreita nos corredores.
                 </div>
 
                 <?php if ($is_logged_in): ?>

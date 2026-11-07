@@ -97,6 +97,16 @@ $loadPending = isset($_GET['load']) && $_GET['load'] === '1';
                 </div>
 
                 <div class="settings-group">
+                    <label>Volume dos Ambientes: <span id="ambient-volume-value">40%</span></label>
+                    <input type="range" id="ambient-volume" min="0" max="100" value="40">
+                </div>
+
+                <div class="settings-group">
+                    <label>Transparência da Caixa de Diálogo: <span id="dialogue-opacity-value">90%</span></label>
+                    <input type="range" id="dialogue-opacity" min="0" max="100" value="90">
+                </div>
+
+                <div class="settings-group">
                     <label>Velocidade do Texto: <span id="text-speed-value">30ms</span></label>
                     <input type="range" id="text-speed" min="10" max="100" value="30">
                 </div>
@@ -106,6 +116,15 @@ $loadPending = isset($_GET['load']) && $_GET['load'] === '1';
                         <input type="checkbox" id="instant-text">
                         Revelar Texto Instantaneamente
                     </label>
+                </div>
+
+                <div class="settings-group">
+                    <label for="dialogue-theme">Tema dos Diálogos:</label>
+                    <select id="dialogue-theme" style="width: 100%; padding: 8px; background: #1a1a2e; color: #e0e0e0; border: 1px solid #3a3a5a;">
+                        <option value="auto">Automático (segue o cenário)</option>
+                        <option value="dark">Escuro — texto claro</option>
+                        <option value="light">Claro — texto escuro</option>
+                    </select>
                 </div>
 
                 <button class="vn-pause-button" id="vn-reset-settings">Restaurar Padrão</button>
@@ -137,6 +156,96 @@ $loadPending = isset($_GET['load']) && $_GET['load'] === '1';
 
             // Conectar interface com motor
             VNInterface.connectEngine(window.username);
+
+            // Configurar controles de configurações
+            document.getElementById('music-volume').addEventListener('input', function(e) {
+                const value = e.target.value / 100;
+                document.getElementById('music-volume-value').textContent = e.target.value + '%';
+                if (typeof VNSettings !== 'undefined') {
+                    VNSettings.set('musicVolume', value);
+                }
+            });
+
+            document.getElementById('sfx-volume').addEventListener('input', function(e) {
+                const value = e.target.value / 100;
+                document.getElementById('sfx-volume-value').textContent = e.target.value + '%';
+                if (typeof VNSettings !== 'undefined') {
+                    VNSettings.set('sfxVolume', value);
+                }
+            });
+
+            document.getElementById('ambient-volume').addEventListener('input', function(e) {
+                const value = e.target.value / 100;
+                document.getElementById('ambient-volume-value').textContent = e.target.value + '%';
+                if (typeof VNSettings !== 'undefined') {
+                    VNSettings.set('ambientVolume', value);
+                }
+            });
+
+            document.getElementById('dialogue-opacity').addEventListener('input', function(e) {
+                const value = e.target.value / 100;
+                document.getElementById('dialogue-opacity-value').textContent = e.target.value + '%';
+                if (typeof VNSettings !== 'undefined') {
+                    VNSettings.set('dialogueOpacity', value);
+                }
+            });
+
+            document.getElementById('text-speed').addEventListener('input', function(e) {
+                const value = parseInt(e.target.value);
+                document.getElementById('text-speed-value').textContent = value + 'ms';
+                if (typeof VNSettings !== 'undefined') {
+                    VNSettings.set('textSpeed', value);
+                }
+            });
+
+            document.getElementById('instant-text').addEventListener('change', function(e) {
+                if (typeof VNSettings !== 'undefined') {
+                    VNSettings.set('instantText', e.target.checked);
+                }
+            });
+
+            document.getElementById('dialogue-theme').addEventListener('change', function(e) {
+                if (typeof VNSettings !== 'undefined') {
+                    VNSettings.set('dialogueTheme', e.target.value);
+                }
+            });
+
+            document.getElementById('vn-reset-settings').addEventListener('click', function() {
+                if (typeof VNSettings !== 'undefined') {
+                    VNSettings.reset();
+                    // Atualizar UI
+                    document.getElementById('music-volume').value = VNSettings.defaults.musicVolume * 100;
+                    document.getElementById('music-volume-value').textContent = (VNSettings.defaults.musicVolume * 100) + '%';
+                    document.getElementById('sfx-volume').value = VNSettings.defaults.sfxVolume * 100;
+                    document.getElementById('sfx-volume-value').textContent = (VNSettings.defaults.sfxVolume * 100) + '%';
+                    document.getElementById('ambient-volume').value = VNSettings.defaults.ambientVolume * 100;
+                    document.getElementById('ambient-volume-value').textContent = (VNSettings.defaults.ambientVolume * 100) + '%';
+                    document.getElementById('dialogue-opacity').value = VNSettings.defaults.dialogueOpacity * 100;
+                    document.getElementById('dialogue-opacity-value').textContent = (VNSettings.defaults.dialogueOpacity * 100) + '%';
+                    document.getElementById('text-speed').value = VNSettings.defaults.textSpeed;
+                    document.getElementById('text-speed-value').textContent = VNSettings.defaults.textSpeed + 'ms';
+                    document.getElementById('instant-text').checked = VNSettings.defaults.instantText;
+                    document.getElementById('dialogue-theme').value = VNSettings.defaults.dialogueTheme || 'auto';
+                }
+            });
+
+            // Carregar valores salvos ao abrir configurações
+            document.getElementById('vn-settings').addEventListener('click', function() {
+                if (typeof VNSettings !== 'undefined') {
+                    document.getElementById('music-volume').value = VNSettings.settings.musicVolume * 100;
+                    document.getElementById('music-volume-value').textContent = (VNSettings.settings.musicVolume * 100) + '%';
+                    document.getElementById('sfx-volume').value = VNSettings.settings.sfxVolume * 100;
+                    document.getElementById('sfx-volume-value').textContent = (VNSettings.settings.sfxVolume * 100) + '%';
+                    document.getElementById('ambient-volume').value = VNSettings.settings.ambientVolume * 100;
+                    document.getElementById('ambient-volume-value').textContent = (VNSettings.settings.ambientVolume * 100) + '%';
+                    document.getElementById('dialogue-opacity').value = VNSettings.settings.dialogueOpacity * 100;
+                    document.getElementById('dialogue-opacity-value').textContent = (VNSettings.settings.dialogueOpacity * 100) + '%';
+                    document.getElementById('text-speed').value = VNSettings.settings.textSpeed;
+                    document.getElementById('text-speed-value').textContent = VNSettings.settings.textSpeed + 'ms';
+                    document.getElementById('instant-text').checked = VNSettings.settings.instantText;
+                    document.getElementById('dialogue-theme').value = VNSettings.settings.dialogueTheme || 'auto';
+                }
+            });
 
             // Verificar se deve carregar salvamento pendente
             const loadPending = document.getElementById('load_pending').value === '1';

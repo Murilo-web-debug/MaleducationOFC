@@ -12,6 +12,7 @@ const VNInterface = {
         currentText: '',
         engineConnected: false,
         inputProcessed: false,
+        bgLuminance: null, // luminância média do background (0-255)
     },
 
     // Elementos DOM
@@ -308,17 +309,135 @@ const VNInterface = {
 
     // Mapeamento de personagens por expressão
     characterImages: {
-        center: 'amigo.jpeg',
-        left: 'mae.jpeg',
-        right: 'pai.jpeg',
-        professor: 'professor.jpeg',
-        alunos_machucados: 'alunos_machucados.jpeg'
+        // Mãe
+        mae_neutra: 'mae_normal.png',
+        mae_feliz: 'mae_feliz.png',
+        mae_triste: 'mae_triste.png',
+
+        // Amigo
+        amigo_neutro: 'amigo_feliz.png',
+        amigo_assustado: 'amigo_assustado.png',
+        amigo_bravo: 'amigo_bravo.png',
+
+        // Professor
+        professor_neutro: 'professor_normal.png',
+        professor_nervoso: 'professor_feliz_nervoso.png',
+        professor_tenso: 'professor_tenso.png',
+
+        // Pai
+        pai_neutro: 'pai_normal.png',
+        pai_feliz: 'pai_normal.png',
+        pai_bravo: 'pai_bravo.png',
+        pai_triste: 'pai_triste.png',
+
+        // Alunos machucados
+        alunos_machucados_neutro: 'alunos_machucados.png',
+        alunos_machucados_bravos: 'alunos_machucados.png',
+
+        // Chefe Goxtoso
+        chefe_goxtoso: 'chefe_goxtoso.png',
+        chefe_goxtoso_aberto: 'chefe_goxtoso_bracos_abertos.png'
     },
 
-    // Definir personagem atual
-    setCharacter: function(character) {
+    // Configuração de cada personagem:
+    //   position: slot padrão ('left' ~26%, 'center' 50%, 'right' ~74%)
+    //   scale: escala geral (origem nos pés); offsetX/offsetY em px.
+    // O elemento set_character do JSON pode sobrescrever com "position".
+    characterPositioning: {
+        // Mãe — lado direito (enquadramento meio-corpo)
+        mae_neutra:    { position: 'right', scale: 1.8,  offsetX: 0, offsetY: 0 },
+        mae_feliz:     { position: 'right', scale: 1.8,  offsetX: 0, offsetY: 0 },
+        mae_triste:    { position: 'right', scale: 1.8,  offsetX: 0, offsetY: 0 },
+        // Amigo — lado direito
+        amigo_neutro:  { position: 'right', scale: 1.7,  offsetX: 0, offsetY: 0 },
+        amigo_assustado: { position: 'right', scale: 1.7, offsetX: 0, offsetY: 0 },
+        amigo_bravo:   { position: 'right', scale: 1.7,  offsetX: 0, offsetY: 0 },
+        // Professor — lado esquerdo
+        professor_neutro: { position: 'left', scale: 1.8, offsetX: 0, offsetY: 0 },
+        professor_nervoso: { position: 'left', scale: 1.8, offsetX: 0, offsetY: 0 },
+        professor_tenso: { position: 'left', scale: 1.8, offsetX: 0, offsetY: 0 },
+        // Pai
+        pai_neutro: { position: 'left', scale: 1.8, offsetX: 0, offsetY: 0 },
+        pai_feliz: { position: 'left', scale: 1.8, offsetX: 0, offsetY: 0 },
+        pai_bravo: { position: 'left', scale: 1.8, offsetX: 0, offsetY: 0 },
+        pai_triste: { position: 'left', scale: 1.8, offsetX: 0, offsetY: 0 },
+        // Alunos machucados
+        alunos_machucados_neutro: { position: 'left', scale: 1.7, offsetX: 0, offsetY: 0 },
+        alunos_machucados_bravos: { position: 'right', scale: 1.7, offsetX: 0, offsetY: 0 },
+        // Chefe Goxtoso — lado direito. A arte é mais baixa/compacta que a
+        // dos demais personagens, então usa escala maior para ter presença.
+        chefe_goxtoso: { position: 'right', scale: 1.9, offsetX: 0, offsetY: 0 },
+        chefe_goxtoso_aberto: { position: 'right', scale: 1.9, offsetX: 0, offsetY: 0 }
+    },
+
+    // Definir personagem atual.
+    // position (opcional): 'left' | 'center' | 'right'. Se omitido,
+    // usa a posição padrão configurada em characterPositioning.
+    setCharacter: function(character, position) {
+        // Esconder todos os personagens primeiro
+        this.hideAllCharacters();
+
         this.state.currentCharacter = character;
-        console.log('Maleducation: Personagem atual definido para ' + character);
+
+        if (!character) {
+            return;
+        }
+
+        // Resolver slot: position explícita > padrão do personagem > direita
+        const cfg = this.characterPositioning[character] || {};
+        const slot = (position && this.elements.characters[position])
+            ? position
+            : (this.elements.characters[cfg.position] ? cfg.position : 'right');
+
+        // Carregar imagem do personagem no slot resolvido
+        const characterElement = this.elements.characters[slot];
+
+        if (characterElement) {
+            // Obter nome do arquivo do mapeamento
+            const imageFile = this.characterImages[character];
+
+            if (!imageFile) {
+                // Esconder personagem se não houver imagem
+                characterElement.style.display = 'none';
+                return;
+            }
+
+            // Aplicar ajustes de posicionamento do personagem (preserva posição
+            // e escala ao trocar de expressão, pois a âncora é o mesmo slot)
+            const pos = this.characterPositioning[character] || { scale: 1, offsetX: 0, offsetY: 0 };
+            characterElement.style.setProperty('--char-scale', pos.scale);
+            characterElement.style.setProperty('--char-offset-x', pos.offsetX + 'px');
+            characterElement.style.setProperty('--char-offset-y', pos.offsetY + 'px');
+
+            // Verificar se já tem imagem
+            let imgElement = characterElement.querySelector('.vn-character-image');
+            const imagePath = '/teste/public/assets/characters/' + imageFile;
+
+            if (!imgElement) {
+                imgElement = document.createElement('img');
+                imgElement.className = 'vn-character-image';
+                imgElement.style.position = 'absolute';
+                imgElement.style.top = '0';
+                imgElement.style.left = '0';
+                imgElement.style.width = '100%';
+                imgElement.style.height = '100%';
+                imgElement.style.objectFit = 'contain';
+                characterElement.appendChild(imgElement);
+            }
+
+            // Carregar imagem
+            imgElement.src = imagePath;
+            imgElement.style.display = 'block';
+
+            // Esconder placeholder
+            const placeholder = characterElement.querySelector('.vn-character-placeholder');
+            if (placeholder) {
+                placeholder.style.display = 'none';
+            }
+
+            // Mostrar o elemento do personagem
+            characterElement.style.display = 'block';
+        }
     },
 
     // Mostrar personagem
@@ -327,13 +446,18 @@ const VNInterface = {
         if (character) {
             character.style.display = 'block';
 
-            // Carregar imagem baseada no personagem atual em cena
-            // Por enquanto, usa imagem padrão baseada na posição
-            let imageFile = this.characterImages[position] || 'amigo.jpeg';
+            // Usar o personagem atual configurado
+            const currentCharId = this.state.currentCharacter;
+            let imageFile = null;
 
-            // Verificar se há um personagem específico configurado
-            if (this.state.currentCharacter) {
-                imageFile = this.state.currentCharacter;
+            if (currentCharId && this.characterImages[currentCharId]) {
+                imageFile = this.characterImages[currentCharId];
+            }
+
+            // Se não houver imagem, esconder
+            if (!imageFile) {
+                character.style.display = 'none';
+                return;
             }
 
             const img = character.querySelector('img');
@@ -348,8 +472,6 @@ const VNInterface = {
                 character.innerHTML = '';
                 character.appendChild(newImg);
             }
-
-            console.log('Maleducation: Personagem mostrado em ' + position + ' (imagem: ' + imageFile + ')');
         }
     },
 
@@ -358,12 +480,12 @@ const VNInterface = {
         const character = this.elements.characters[position];
         if (character) {
             character.style.display = 'none';
-            console.log('Maleducation: Personagem ocultado em ' + position);
         }
     },
 
     // Ocultar todos os personagens
     hideAllCharacters: function() {
+        this.state.currentCharacter = null;
         this.hideCharacter('left');
         this.hideCharacter('center');
         this.hideCharacter('right');
@@ -381,10 +503,83 @@ const VNInterface = {
     // Definir background
     setBackground: function(background) {
         const bgElement = document.getElementById('vn-background');
+
         if (bgElement) {
-            // No futuro, isso mudará a imagem de fundo
-            console.log('Maleducation: Background alterado para: ' + background);
+            if (background && background !== '') {
+                // Carregar imagem de background
+                const bgImage = bgElement.querySelector('.vn-background-image');
+                const imagePath = '/teste/public/assets/backgrounds/' + background;
+
+                if (bgImage) {
+                    bgImage.src = imagePath;
+                    bgImage.style.display = 'block';
+                } else {
+                    const newImg = document.createElement('img');
+                    newImg.src = imagePath;
+                    newImg.className = 'vn-background-image';
+                    newImg.style.position = 'absolute';
+                    newImg.style.top = '0';
+                    newImg.style.left = '0';
+                    newImg.style.width = '100%';
+                    newImg.style.height = '100%';
+                    newImg.style.objectFit = 'cover';
+                    newImg.style.display = 'block';
+                    bgElement.innerHTML = '';
+                    bgElement.appendChild(newImg);
+                }
+                // Esconder placeholder
+                const placeholder = bgElement.querySelector('.vn-background-placeholder');
+                if (placeholder) {
+                    placeholder.style.display = 'none';
+                }
+
+                // Medir luminância do background para o tema automático dos diálogos
+                this.measureBackgroundLuminance(imagePath);
+            } else {
+                // Se não houver background, mostrar placeholder
+                const bgImage = bgElement.querySelector('.vn-background-image');
+                if (bgImage) {
+                    bgImage.style.display = 'none';
+                }
+                const placeholder = bgElement.querySelector('.vn-background-placeholder');
+                if (placeholder) {
+                    placeholder.style.display = 'flex';
+                }
+                this.state.bgLuminance = null;
+            }
         }
+    },
+
+    // Calcular luminância média do background (0-255) via canvas.
+    // Imagens são same-origin, então não há problema de CORS.
+    measureBackgroundLuminance: function(imagePath) {
+        const img = new Image();
+        img.onload = function() {
+            try {
+                const size = 40;
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, size, size);
+                const data = ctx.getImageData(0, 0, size, size).data;
+                let sum = 0;
+                const pixels = data.length / 4;
+                for (let i = 0; i < data.length; i += 4) {
+                    sum += 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+                }
+                VNInterface.state.bgLuminance = sum / pixels;
+                if (typeof VNSettings !== 'undefined') {
+                    VNSettings.applyDialogueTheme();
+                }
+            } catch (e) {
+                console.warn('Maleducation: Não foi possível medir luminância do background', e);
+            }
+        };
+        img.onerror = function() {
+            VNInterface.state.bgLuminance = null;
+        };
+        img.src = imagePath;
     },
 
     // Sair para o menu principal

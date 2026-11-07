@@ -76,8 +76,8 @@ $csrf_token = generateCSRFToken();
                 </div>
             </div>
             <div class="retro-window-content">
-                <div class="logo-area" style="height: 80px; margin-bottom: 15px;">
-                    <div class="logo-placeholder" style="font-size: 12px;">MALEDUCATION</div>
+                <div class="logo-area" style="height: 90px; margin-bottom: 15px;">
+                    <img src="/teste/public/assets/logo/logo.png" alt="Maleducation" class="logo-img">
                 </div>
 
                 <div class="auth-form">
