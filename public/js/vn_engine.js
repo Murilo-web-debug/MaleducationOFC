@@ -234,6 +234,12 @@ const VNEngine = {
             case 'hide_all_characters':
                 this.executeHideAllCharacters();
                 break;
+            case 'show_composition':
+                this.executeShowComposition(element);
+                break;
+            case 'hide_composition':
+                this.executeHideComposition();
+                break;
             case 'change_expression':
                 this.executeChangeExpression(element);
                 break;
@@ -513,6 +519,30 @@ const VNEngine = {
             }
         } else if (this.callbacks.onSetCharacter) {
             this.callbacks.onSetCharacter(null, null);
+        }
+
+        this.advanceElement();
+    },
+
+    // Executar mostrar imagem de composição centralizada
+    executeShowComposition: function(element) {
+        const imageFile = element.image || null;
+
+        if (imageFile) {
+            console.log('Maleducation: Mostrando composição: ' + imageFile);
+            if (this.callbacks.onShowComposition) {
+                this.callbacks.onShowComposition(imageFile);
+            }
+        }
+
+        this.advanceElement();
+    },
+
+    // Executar esconder imagem de composição
+    executeHideComposition: function() {
+        console.log('Maleducation: Escondendo composição');
+        if (this.callbacks.onHideComposition) {
+            this.callbacks.onHideComposition();
         }
 
         this.advanceElement();
@@ -800,11 +830,16 @@ const VNEngine = {
             save_name: saveName || 'Salvamento ' + new Date().toLocaleString('pt-BR')
         };
 
-        // Obter token CSRF
-        const csrfToken = document.querySelector('input[name="csrf_token"]')?.value;
+        // Obter token CSRF e limpar qualquer HTML
+        let csrfToken = document.querySelector('input[name="csrf_token"]')?.value;
+        if (csrfToken) {
+            csrfToken = csrfToken.replace(/<[^>]*>/g, '').trim();
+        }
+        console.log('Maleducation: Token CSRF capturado:', csrfToken ? csrfToken.substring(0, 10) + '...' : 'NULO');
 
         return fetch('/teste/src/game/save_manager.php?action=save', {
             method: 'POST',
+            credentials: 'same-origin',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -830,7 +865,9 @@ const VNEngine = {
 
     // Listar salvamentos
     listSaves: function() {
-        return fetch('/teste/src/game/save_manager.php?action=list')
+        return fetch('/teste/src/game/save_manager.php?action=list', {
+            credentials: 'same-origin'
+        })
             .then(r => r.json())
             .then(response => {
                 if (response.success) {
@@ -848,12 +885,14 @@ const VNEngine = {
 
     // Carregar salvamento
     loadGame: function(saveId) {
+        const csrfToken = document.querySelector('input[name="csrf_token"]')?.value;
         return fetch('/teste/src/game/save_manager.php?action=load', {
             method: 'POST',
+            credentials: 'same-origin',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ save_id: saveId })
+            body: JSON.stringify({ save_id: saveId, csrf_token: csrfToken })
         })
         .then(r => r.json())
         .then(response => {
@@ -873,12 +912,14 @@ const VNEngine = {
 
     // Deletar salvamento
     deleteSave: function(saveId) {
+        const csrfToken = document.querySelector('input[name="csrf_token"]')?.value;
         return fetch('/teste/src/game/save_manager.php?action=delete', {
             method: 'POST',
+            credentials: 'same-origin',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ save_id: saveId })
+            body: JSON.stringify({ save_id: saveId, csrf_token: csrfToken })
         })
         .then(r => r.json())
         .then(response => {
@@ -935,6 +976,9 @@ const VNEngine = {
                 this.state.choicesMade = saveData.choices_made;
             }
 
+            // Restaurar background da cena do save (procurar último background definido antes da cena)
+            this.restoreBackgroundForScene(saveData.scene_id);
+
             // Ir para a cena do salvamento
             const sceneLoaded = this.goToScene(saveData.scene_id);
 
@@ -944,6 +988,35 @@ const VNEngine = {
 
             return sceneLoaded;
         });
+    },
+
+    // Restaurar background correto para a cena do save
+    restoreBackgroundForScene: function(sceneId) {
+        if (!this.chapterData || !this.chapterData.scenes) return;
+
+        const scenes = this.chapterData.scenes;
+        const targetSceneIndex = scenes.findIndex(s => s.id === sceneId);
+
+        if (targetSceneIndex === -1) return;
+
+        // Procurar o último background definido antes da cena do save
+        let lastBackground = null;
+        for (let i = 0; i <= targetSceneIndex; i++) {
+            const scene = scenes[i];
+            if (scene.elements) {
+                for (const element of scene.elements) {
+                    if (element.type === 'background' && element.value) {
+                        lastBackground = element.value;
+                    }
+                }
+            }
+        }
+
+        // Se encontrar um background, aplicá-lo antes de ir para a cena
+        if (lastBackground && this.callbacks.onSetBackground) {
+            console.log('Maleducation: Restaurando background: ' + lastBackground);
+            this.callbacks.onSetBackground(lastBackground);
+        }
     },
 
     // Salvar automaticamente em pontos seguros

@@ -966,6 +966,12 @@
                     "text": "Os alunos ao seu redor conversam em sussurros. Você tenta ouvir, mas é impossível distinguir."
                 },
                 {
+                    "type": "play_ambient",
+                    "filename": "Conversas_distantes.mp3",
+                    "loop": true,
+                    "volume": 0.4
+                },
+                {
                     "type": "narration",
                     "text": "O aluno que te acompanhou desde a entrada está sentado algumas carteiras à frente. Ele não te olha."
                 },
@@ -982,6 +988,10 @@
                     "type": "play_sfx",
                     "filename": "Gritono_corredor.mp3",
                     "volume": 0.9
+                },
+                {
+                    "type": "stop_ambient",
+                    "fade": true
                 },
                 {
                     "type": "play_music",

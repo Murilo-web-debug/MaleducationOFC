@@ -8,7 +8,8 @@ if (session_status() === PHP_SESSION_NONE) {
     // Configurações de segurança da sessão
     ini_set('session.cookie_httponly', 1);
     ini_set('session.use_only_cookies', 1);
-    ini_set('session.cookie_samesite', 'Strict');
+    // Lax permite cookies em requisições fetch do mesmo site (necessário para CSRF)
+    ini_set('session.cookie_samesite', 'Lax');
 
     // Em produção com HTTPS, descomente a linha abaixo
     // ini_set('session.cookie_secure', 1);

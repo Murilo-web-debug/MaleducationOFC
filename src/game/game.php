@@ -3,12 +3,24 @@
  * Interface principal da visual novel - Maleducation
  */
 
+// Iniciar buffer de output para capturar qualquer erro HTML
+ob_start();
+
 require_once __DIR__ . '/../auth/auth_helper.php';
 
 // Verificar autenticação
 requireAuth();
 
 $username = getCurrentUsername();
+
+// Gerar token CSRF
+$csrf_token = generateCSRFToken();
+
+// Limpar qualquer output de erro que tenha sido capturado
+ob_end_clean();
+
+// Injetar token vazio - será preenchido via JavaScript
+$csrf_token_html = '';
 
 // Verificar se deve carregar salvamento pendente
 $loadPending = isset($_GET['load']) && $_GET['load'] === '1';
@@ -40,6 +52,9 @@ $loadPending = isset($_GET['load']) && $_GET['load'] === '1';
                 <div class="vn-character-placeholder">Personagem Direita</div>
             </div>
         </div>
+
+        <!-- Imagem de composição centralizada (ex: amigo com alunos) -->
+        <img id="vn-composition-image" class="vn-composition-image" src="" alt="">
 
         <!-- Caixa de diálogo -->
         <div class="vn-dialogue" id="vn-dialogue">
@@ -139,6 +154,17 @@ $loadPending = isset($_GET['load']) && $_GET['load'] === '1';
     <script>
         // Passar o nome de usuário para o JavaScript
         window.username = "<?php echo htmlspecialchars($username, ENT_QUOTES, 'UTF-8'); ?>";
+
+        // Gerar token CSRF via endpoint para evitar contaminação de HTML
+        fetch('/teste/src/auth/csrf_token.php')
+            .then(r => r.text())
+            .then(token => {
+                document.getElementById('csrf_token').value = token;
+                console.log('Maleducation: Token CSRF carregado via endpoint');
+            })
+            .catch(e => {
+                console.error('Maleducation: Erro ao carregar token CSRF:', e);
+            });
     </script>
     <script src="/teste/public/js/main.js"></script>
     <script src="/teste/public/js/vn_settings.js"></script>

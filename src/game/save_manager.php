@@ -53,9 +53,16 @@ function handleSave($userId, $username) {
         return;
     }
 
+    // Debug log
+    error_log('Maleducation: Requisição de save recebida. User ID: ' . $userId);
+
     // Verificar CSRF
     $input = json_decode(file_get_contents('php://input'), true);
+    error_log('Maleducation: CSRF token recebido: ' . ($input['csrf_token'] ?? 'NULO'));
+    error_log('Maleducation: CSRF token na sessão: ' . ($_SESSION['csrf_token'] ?? 'NULO'));
+
     if (!isset($input['csrf_token']) || !verifyCSRFToken($input['csrf_token'])) {
+        error_log('Maleducation: Falha na validação CSRF');
         http_response_code(403);
         echo json_encode(['error' => 'Erro de validação CSRF']);
         return;

@@ -696,6 +696,28 @@ body {
     padding: 10px;
 }
 
+/* Imagem centralizada em composição (ex: amigo com alunos assustados)
+   Diferente dos sprites laterais: ocupa altura quase total, centralizada.
+   Usada para cenas de impacto narrativo com múltiplos personagens juntos. */
+.vn-composition-image {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 85vh;
+    width: auto;
+    max-width: 95vw;
+    object-fit: contain;
+    object-position: center;
+    z-index: 3;
+    transition: opacity 0.5s ease;
+    opacity: 0;
+}
+
+.vn-composition-image.visible {
+    opacity: 1;
+}
+
 /* Caixa de diálogo */
 .vn-dialogue {
     position: absolute;
@@ -721,7 +743,7 @@ body {
 }
 
 .vn-speaker {
-    font-size: clamp(17px, 1.8vw, 20px);
+    font-size: clamp(18px, 2vw, 22px);
     font-weight: bold;
     color: #ff6b6b;
     letter-spacing: 0.5px;
@@ -757,8 +779,8 @@ body {
 }
 
 .vn-text {
-    font-size: clamp(16px, 1.7vw, 19px);
-    line-height: 1.7;
+    font-size: clamp(17px, 1.9vw, 21px);
+    line-height: 1.75;
     color: #eaeaf2;
     margin: 0;
     overflow-wrap: break-word;

@@ -13,6 +13,7 @@ const VNInterface = {
         engineConnected: false,
         inputProcessed: false,
         bgLuminance: null, // luminância média do background (0-255)
+        characterVisibility: { left: false, center: false, right: false }, // visibilidade independente por slot
     },
 
     // Elementos DOM
@@ -43,6 +44,7 @@ const VNInterface = {
         musicVolumeValue: null,
         sfxVolumeValue: null,
         textSpeedValue: null,
+        compositionImage: null,
         characters: {
             left: null,
             center: null,
@@ -81,6 +83,7 @@ const VNInterface = {
         this.elements.musicVolumeValue = document.getElementById('music-volume-value');
         this.elements.sfxVolumeValue = document.getElementById('sfx-volume-value');
         this.elements.textSpeedValue = document.getElementById('text-speed-value');
+        this.elements.compositionImage = document.getElementById('vn-composition-image');
         this.elements.characters.left = document.getElementById('vn-character-left');
         this.elements.characters.center = document.getElementById('vn-character-center');
         this.elements.characters.right = document.getElementById('vn-character-right');
@@ -336,7 +339,8 @@ const VNInterface = {
 
         // Chefe Goxtoso
         chefe_goxtoso: 'chefe_goxtoso.png',
-        chefe_goxtoso_aberto: 'chefe_goxtoso_bracos_abertos.png'
+        chefe_goxtoso_aberto: 'chefe_goxtoso_bracos_abertos.png',
+        chefe_goxtoso_costas: 'chefe_goxtoso_de_costas_na_cadeira.png'
     },
 
     // Configuração de cada personagem:
@@ -364,18 +368,19 @@ const VNInterface = {
         // Alunos machucados
         alunos_machucados_neutro: { position: 'left', scale: 1.7, offsetX: 0, offsetY: 0 },
         alunos_machucados_bravos: { position: 'right', scale: 1.7, offsetX: 0, offsetY: 0 },
-        // Chefe Goxtoso — lado direito. A arte é mais baixa/compacta que a
-        // dos demais personagens, então usa escala maior para ter presença.
-        chefe_goxtoso: { position: 'right', scale: 1.9, offsetX: 0, offsetY: 0 },
-        chefe_goxtoso_aberto: { position: 'right', scale: 1.9, offsetX: 0, offsetY: 0 }
+        // Chefe Goxtoso — posicionado no centro para presença imponente
+        chefe_goxtoso: { position: 'center', scale: 2.0, offsetX: 0, offsetY: -30 },
+        chefe_goxtoso_aberto: { position: 'center', scale: 2.0, offsetX: 0, offsetY: -30 },
+        // Goxtoso de costas — centralizado, escala similar
+        chefe_goxtoso_costas: { position: 'center', scale: 1.9, offsetX: 0, offsetY: -20 }
     },
 
     // Definir personagem atual.
     // position (opcional): 'left' | 'center' | 'right'. Se omitido,
     // usa a posição padrão configurada em characterPositioning.
     setCharacter: function(character, position) {
-        // Esconder todos os personagens primeiro
-        this.hideAllCharacters();
+        // NÃO esconde mais os outros personagens automaticamente
+        // Use hideCharacter ou hideAllCharacters explicitamente quando necessário
 
         this.state.currentCharacter = character;
 
@@ -388,6 +393,9 @@ const VNInterface = {
         const slot = (position && this.elements.characters[position])
             ? position
             : (this.elements.characters[cfg.position] ? cfg.position : 'right');
+
+        // Atualizar visibilidade do slot
+        this.state.characterVisibility[slot] = true;
 
         // Carregar imagem do personagem no slot resolvido
         const characterElement = this.elements.characters[slot];
@@ -480,12 +488,14 @@ const VNInterface = {
         const character = this.elements.characters[position];
         if (character) {
             character.style.display = 'none';
+            this.state.characterVisibility[position] = false;
         }
     },
 
     // Ocultar todos os personagens
     hideAllCharacters: function() {
         this.state.currentCharacter = null;
+        this.state.characterVisibility = { left: false, center: false, right: false };
         this.hideCharacter('left');
         this.hideCharacter('center');
         this.hideCharacter('right');
@@ -602,6 +612,8 @@ const VNInterface = {
                 onShowCharacter: (position, expression) => this.showCharacter(position, expression),
                 onHideCharacter: (position) => this.hideCharacter(position),
                 onHideAllCharacters: () => this.hideAllCharacters(),
+                onShowComposition: (imageFile) => this.showComposition(imageFile),
+                onHideComposition: () => this.hideComposition(),
                 onChangeExpression: (position, expression) => this.changeExpression(position, expression),
                 onShowChoices: (choices) => this.showChoices(choices),
                 onHideChoices: () => this.hideChoices(),
@@ -843,6 +855,21 @@ const VNInterface = {
                 this.loadSettingsValues();
                 alert('Configurações restauradas!');
             }
+        }
+    },
+
+    // Mostrar imagem de composição centralizada (ex: amigo com alunos)
+    showComposition: function(imageFile) {
+        if (!this.elements.compositionImage) return;
+        const imgPath = '/teste/public/assets/characters/' + imageFile;
+        this.elements.compositionImage.src = imgPath;
+        this.elements.compositionImage.classList.add('visible');
+    },
+
+    // Esconder imagem de composição
+    hideComposition: function() {
+        if (this.elements.compositionImage) {
+            this.elements.compositionImage.classList.remove('visible');
         }
     },
 

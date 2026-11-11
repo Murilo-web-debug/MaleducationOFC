@@ -186,6 +186,12 @@
                     "value": "fabrica_vista_de_cima.png"
                 },
                 {
+                    "type": "play_ambient",
+                    "filename": "Esteira_industrial.mp3",
+                    "loop": true,
+                    "volume": 0.4
+                },
+                {
                     "type": "play_music",
                     "filename": "Entradada_escola.mp3",
                     "loop": true,
@@ -213,8 +219,18 @@
                     "text": "GOXTOSO"
                 },
                 {
+                    "type": "play_sfx",
+                    "filename": "Embalagemplástica_amassando.mp3",
+                    "volume": 0.4
+                },
+                {
                     "type": "narration",
                     "text": "Você começa a perceber que aquela fábrica é muito maior do que imaginava. Existem diversos setores, corredores e plataformas metálicas conectando as diferentes partes da instalação."
+                },
+                {
+                    "type": "play_sfx",
+                    "filename": "Prods_caindonaesteira.mp3",
+                    "volume": 0.5
                 },
                 {
                     "type": "goto",
@@ -270,17 +286,25 @@
                     "text": "É o seu colega."
                 },
                 {
-                    "type": "set_character",
-                    "character": "amigo_bravo"
+                    "type": "show_composition",
+                    "image": "amigo_do_protagonista_assustado_e_outros_alunos.png"
+                },
+                {
+                    "type": "play_sfx",
+                    "filename": "Impactograve.mp3",
+                    "volume": 0.7
                 },
                 {
                     "type": "narration",
-                    "text": "Ele está do outro lado da plataforma, acompanhado de outros alunos."
+                    "text": "Ele está do outro lado da plataforma, acompanhado de outros alunos. Todos têm o mesmo ar de quem viu algo que não deveria."
                 },
                 {
                     "type": "dialogue",
                     "speaker": "Aluno",
                     "text": "Você não deveria ter descido."
+                },
+                {
+                    "type": "hide_composition"
                 },
                 {
                     "type": "goto",
@@ -313,17 +337,25 @@
                     "text": "É o seu colega."
                 },
                 {
-                    "type": "set_character",
-                    "character": "amigo_bravo"
+                    "type": "show_composition",
+                    "image": "amigo_do_protagonista_assustado_e_outros_alunos.png"
+                },
+                {
+                    "type": "play_sfx",
+                    "filename": "Impactograve.mp3",
+                    "volume": 0.7
                 },
                 {
                     "type": "narration",
-                    "text": "Ele está do outro lado da plataforma, acompanhado de outros alunos."
+                    "text": "Ele está do outro lado da plataforma, acompanhado de outros alunos. Todos têm o mesmo ar de quem viu algo que não deveria."
                 },
                 {
                     "type": "dialogue",
                     "speaker": "Aluno",
                     "text": "Você não deveria ter descido."
+                },
+                {
+                    "type": "hide_composition"
                 },
                 {
                     "type": "goto",
@@ -410,6 +442,11 @@
                 {
                     "type": "narration",
                     "text": "Ao atravessar uma porta metálica, encontra um corredor comprido."
+                },
+                {
+                    "type": "play_sfx",
+                    "filename": "Portãometalica_abrindoefechando.mp3",
+                    "volume": 0.6
                 },
                 {
                     "type": "narration",
@@ -500,8 +537,24 @@
                     "text": "Há uma mesa de escritório, algumas estantes, um computador antigo e diversos quadros com fotografias da escola."
                 },
                 {
+                    "type": "play_sfx",
+                    "filename": "Lâmpada_zumbindo.mp3",
+                    "loop": true,
+                    "volume": 0.3
+                },
+                {
+                    "type": "play_sfx",
+                    "filename": "Somdesuspense.mp3",
+                    "loop": true,
+                    "volume": 0.5
+                },
+                {
                     "type": "narration",
                     "text": "No centro da sala, uma cadeira de escritório está posicionada de costas para você."
+                },
+                {
+                    "type": "set_character",
+                    "character": "chefe_goxtoso_costas"
                 },
                 {
                     "type": "narration",
@@ -510,6 +563,15 @@
                 {
                     "type": "narration",
                     "text": "Até que a cadeira começa a girar lentamente."
+                },
+                {
+                    "type": "play_sfx",
+                    "filename": "Cadeiraarrastando.mp3",
+                    "volume": 0.5
+                },
+                {
+                    "type": "hide_character",
+                    "position": "center"
                 },
                 {
                     "type": "dialogue",
@@ -611,6 +673,11 @@
                     "type": "dialogue",
                     "speaker": "Salgadinho Goxtoso",
                     "text": "Seja muito bem-vindo à verdadeira administração da escola Águia da Doom and Despair!"
+                },
+                {
+                    "type": "play_sfx",
+                    "filename": "Aplausosartificiais.mp3",
+                    "volume": 0.6
                 },
                 {
                     "type": "narration",
