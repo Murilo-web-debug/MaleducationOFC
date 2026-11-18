@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maleducation — Apresentação</title>
+<style>
+    :root {
+        --bg: #0a0a12;
+        --bg2: #12121f;
+        --panel: #181828;
+        --border: #3a3a5a;
+        --red: #c0392b;
+        --red-bright: #e74c3c;
+        --text: #e8e8f0;
+        --dim: #9a9ab0;
+        --mono: "Courier New", Courier, monospace;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; background: var(--bg); color: var(--text); font-family: var(--mono); overflow: hidden; }
+
+    /* Scanline / ruído discreto retrô */
+    body::after {
+        content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 99;
+        background: repeating-linear-gradient(0deg, rgba(255,255,255,0.015) 0 1px, transparent 1px 3px);
+    }
+
+    .slide {
+        display: none; position: fixed; inset: 0;
+        padding: 6vh 8vw; flex-direction: column; justify-content: center;
+    }
+    .slide.active { display: flex; }
+
+    .slide-num {
+        position: absolute; top: 24px; right: 32px;
+        color: var(--dim); font-size: 13px; letter-spacing: 2px;
+    }
+    .kicker {
+        color: var(--red-bright); font-size: 14px; letter-spacing: 4px;
+        text-transform: uppercase; margin-bottom: 14px;
+    }
+    h1 { font-size: clamp(38px, 6vw, 72px); letter-spacing: 2px; text-transform: uppercase; }
+    h2 { font-size: clamp(26px, 4vw, 44px); margin-bottom: 18px; letter-spacing: 1px; }
+    h3 { font-size: clamp(16px, 1.8vw, 20px); color: var(--red-bright); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+    p, li { font-size: clamp(14px, 1.6vw, 19px); line-height: 1.65; color: var(--text); }
+    .dim { color: var(--dim); }
+    .red { color: var(--red-bright); }
+
+    ul { list-style: none; }
+    ul li { padding-left: 22px; position: relative; margin-bottom: 10px; }
+    ul li::before { content: "▸"; position: absolute; left: 0; color: var(--red-bright); }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+    .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+
+    .card {
+        background: var(--panel); border: 1px solid var(--border);
+        padding: 18px 20px; position: relative;
+    }
+    .card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--red); }
+    .card h3 { margin-bottom: 8px; }
+
+    .window {
+        background: var(--bg2); border: 2px solid var(--border);
+        box-shadow: 8px 8px 0 rgba(0,0,0,0.5);
+    }
+    .titlebar {
+        background: var(--panel); border-bottom: 1px solid var(--border);
+        padding: 8px 14px; font-size: 13px; color: var(--dim);
+        display: flex; justify-content: space-between;
+    }
+    .titlebar .dots span { display: inline-block; width: 10px; height: 10px; margin-right: 5px; border: 1px solid var(--border); }
+
+    .shot { width: 100%; border: 1px solid var(--border); display: block; }
+    .shot-wrap { border: 2px solid var(--border); box-shadow: 8px 8px 0 rgba(0,0,0,0.5); }
+    .caption { font-size: 12px; color: var(--dim); margin-top: 8px; text-align: center; }
+
+    .placeholder {
+        border: 2px dashed var(--border); background: var(--bg2);
+        display: flex; align-items: center; justify-content: center;
+        min-height: 220px; color: var(--dim); font-size: 14px; text-align: center; padding: 20px;
+    }
+
+    .big-img { max-height: 62vh; max-width: 100%; object-fit: contain; border: 1px solid var(--border); }
+    .spr { height: 340px; object-fit: contain; object-position: bottom; }
+
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid var(--border); padding: 10px 14px; text-align: left; font-size: clamp(13px, 1.4vw, 16px); }
+    th { background: var(--panel); color: var(--red-bright); text-transform: uppercase; font-size: 13px; letter-spacing: 1px; }
+
+    .nav-hint {
+        position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
+        color: var(--dim); font-size: 12px; letter-spacing: 2px; z-index: 100;
+    }
+
+    .logo-img { height: clamp(90px, 14vh, 150px); }
+
+    /* Slide 1 capa */
+    #slide-1 { background:
+        radial-gradient(ellipse at 70% 20%, rgba(192,57,43,0.15), transparent 60%),
+        var(--bg);
+        align-items: center; text-align: center; }
+    #slide-1 .logo-img { margin-bottom: 24px; filter: drop-shadow(0 0 18px rgba(192,57,43,0.4)); }
+    #slide-1 .team { margin-top: 48px; color: var(--dim); font-size: 15px; }
+    #slide-1 .team b { color: var(--text); }
+
+    /* Slide 7 demo */
+    #slide-7 { background: var(--bg); align-items: center; text-align: center; }
+    #slide-7 .demo-window { width: min(860px, 80vw); }
+
+    @media (max-width: 900px) {
+        .two-col, .three-col { grid-template-columns: 1fr; }
+        .slide { padding: 4vh 6vw; }
+    }
+</style>
+</head>
+<body>
+
+<!-- ============ SLIDE 1 — CAPA ============ -->
+<section class="slide active" id="slide-1">
+    <div class="slide-num">01 / 15</div>
+    <img src="public/assets/logo/logo.png" alt="Maleducation" class="logo-img">
+    <h1>Maleducation</h1>
+    <p style="margin-top:14px; color:var(--dim); letter-spacing:3px; text-transform:uppercase;">Visual Novel de Suspense Psicológico</p>
+    <div class="team">
+        <b>Murilo Jorge</b> &nbsp;·&nbsp; <b>Samuel Azaneu</b> &nbsp;·&nbsp; <b>Nicolas Reis</b><br>
+        <span style="font-size:13px">ETEC — 2 AMS B — 18/11/2026</span>
+    </div>
+</section>
+
+<!-- ============ SLIDE 2 — O MISTÉRIO ============ -->
+<section class="slide" id="slide-2">
+    <div class="slide-num">02 / 15</div>
+    <div class="two-col">
+        <div>
+            <div class="kicker">Premissa</div>
+            <h2>O mistério</h2>
+            <p style="margin-bottom:16px">Você é um novo aluno da <span class="red">Águia da Doom and Despair</span>. No intervalo, corredores vazios, um cheiro de salgadinho barato — e um som de engrenagens vindo de baixo.</p>
+            <p style="margin-bottom:16px">Atrás de uma porta secreta existe uma <b>fábrica escondida</b> que produz os <b>Salgadinhos Goxtoso</b>.</p>
+            <p class="dim" style="font-style:italic; font-size:20px">“E se a sua escola escondesse algo?”</p>
+        </div>
+        <div>
+            <img src="public/assets/backgrounds/fabrica_vista_de_cima.png" class="big-img" alt="Fábrica vista de cima">
+            <p class="caption">Background real do jogo — fábrica vista da plataforma</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============ SLIDE 3 — CONHECENDO O PRODUTO ============ -->
+<section class="slide" id="slide-3">
+    <div class="slide-num">03 / 15</div>
+    <div class="kicker">O produto</div>
+    <h2>Conhecendo o Maleducation</h2>
+    <div class="two-col">
+        <div>
+            <ul>
+                <li><b>Visual novel narrativa</b> — a história se desenrola por diálogos e narração.</li>
+                <li><b>2 capítulos jogáveis</b> completos: chegada à escola → descoberta da fábrica → o Goxtoso.</li>
+                <li><b>Personagens com expressões</b>: sprites próprios que mudam conforme a cena.</li>
+                <li><b>Escolhas que importam</b>: investigar ou ignorar muda o capítulo seguinte.</li>
+            </ul>
+        </div>
+        <div>
+            <img src="public/assets/backgrounds/sala_de_aula.jpeg" class="shot" alt="Sala de aula">
+            <p class="caption">Cena real do Capítulo 1 — sala de aula</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============ SLIDE 4 — PÚBLICO-ALVO ============ -->
+<section class="slide" id="slide-4">
+    <div class="slide-num">04 / 15</div>
+    <div class="kicker">Mercado</div>
+    <h2>Público-alvo</h2>
+    <div class="cards">
+        <div class="card"><h3>Fãs de visual novels</h3><p>Quem curte narrativa interativa e decisões que mudam a história.</p></div>
+        <div class="card"><h3>Suspense psicológico</h3><p>Público de mistérios, teorias e histórias perturbadoras.</p></div>
+        <div class="card"><h3>Creepypasta & analog horror</h3><p>Consumidores de estética retrô, sites antigos e internet dos anos 2000.</p></div>
+        <div class="card"><h3>Jogadores casuais</h3><p>Sessões curtas, sem ação nem curva de aprendizado.</p></div>
+    </div>
+    <p class="dim" style="margin-top:26px">Referências de gênero: <span class="red">Doki Doki Literature Club</span>, <span class="red">Ace Attorney</span>, analog horror — apenas como comparativo de mercado.</p>
+</section>
+
+<!-- ============ SLIDE 5 — DIFERENCIAIS ============ -->
+<section class="slide" id="slide-5">
+    <div class="slide-num">05 / 15</div>
+    <div class="kicker">Por que jogar</div>
+    <h2>Diferenciais</h2>
+    <div class="cards">
+        <div class="card"><h3>1. Escolhas com consequência</h3><p>A escolha do Capítulo 1 altera a narração do Capítulo 2 — implementado e testado.</p></div>
+        <div class="card"><h3>2. Estética anos 2000</h3><p>Interface, logo e visual inspirados em sites e blogs antigos.</p></div>
+        <div class="card"><h3>3. Arte própria</h3><p>16 cenários e 15 personagens desenhados para o jogo.</p></div>
+        <div class="card"><h3>4. Som dedicado</h3><p>Músicas, efeitos e ambientes por cena, com controle de volume.</p></div>
+        <div class="card"><h3>5. Contas e saves</h3><p>Login real, progresso salvo na nuvem por usuário.</p></div>
+        <div class="card"><h3>6. Bônus: Goxtoso</h3><p>Chefe memorável com 3 expressões — frontal, braços abertos e de costas.</p></div>
+    </div>
+</section>
+
+<!-- ============ SLIDE 6 — MODELO DE NEGÓCIO ============ -->
+<section class="slide" id="slide-6">
+    <div class="slide-num">06 / 15</div>
+    <div class="kicker">Projeção</div>
+    <h2>Modelo de negócio <span class="dim" style="font-size:0.6em">(ideias futuras — nada implementado)</span></h2>
+    <div class="three-col">
+        <div class="card"><h3>Venda digital</h3><p>itch.io / GOG — pacote completo a preço acessível.</p></div>
+        <div class="card"><h3>Por capítulo</h3><p>Cada capítulo como episódio pago — menor risco para o jogador.</p></div>
+        <div class="card"><h3>Temporada</h3><p>Bundle com capítulos futuros + bônus.</p></div>
+        <div class="card"><h3>Produtos</h3><p>Merch do Goxtoso — o personagem é o mascote natural.</p></div>
+        <div class="card"><h3>Escrita colaborativa</h3><p>Capítulos novos são JSON — dá para escrever sem programar.</p></div>
+        <div class="card"><h3>Baixo custo</h3><p>Stack própria e leve: hosting + arte são os principais gastos.</p></div>
+    </div>
+</section>
+
+<!-- ============ SLIDE 7 — DEMONSTRAÇÃO ============ -->
+<section class="slide" id="slide-7">
+    <div class="slide-num">07 / 15</div>
+    <div class="kicker">Agora</div>
+    <h2>Conheça o Maleducation na prática</h2>
+    <div class="demo-window window">
+        <div class="titlebar"><div class="dots"><span></span><span></span><span></span></div><span>maleducation.exe — visual novel</span></div>
+        <div class="placeholder" style="min-height:300px">
+            <span>[CAPTURA DE TELA REAL DO GAMEPLAY — substituir esta caixa]<br><span class="dim" style="font-size:12px">ex.: cena da fábrica com o Goxtoso</span></span>
+        </div>
+    </div>
+    <ul style="margin-top:22px; display:flex; gap:30px; justify-content:center; flex-wrap:wrap">
+        <li>Login e dashboard</li>
+        <li>Narrativa e escolhas</li>
+        <li>Transição entre capítulos</li>
+        <li>Salvamento e carregamento</li>
+    </ul>
+</section>
+
+<!-- ============ SLIDE 8 — FUNCIONALIDADES ============ -->
+<section class="slide" id="slide-8">
+    <div class="slide-num">08 / 15</div>
+    <div class="kicker">Implementado</div>
+    <h2>Funcionalidades</h2>
+    <div class="cards">
+        <div class="card"><h3>Sistema de diálogos</h3><p>Narração + fala por personagem, com efeito de máquina de escrever e indicador de continuação.</p></div>
+        <div class="card"><h3>Personagens e expressões</h3><p>Sprites com variações de humor, posições laterais, escala individual e cena de grupo centralizada.</p></div>
+        <div class="card"><h3>Escolhas narrativas</h3><p>Menu de decisões que bloqueia a história até a escolha — e guarda o histórico.</p></div>
+        <div class="card"><h3>Controle de áudio</h3><p>Música, efeitos e ambiente em canais separados, com sliders e loops por cena.</p></div>
+        <div class="card"><h3>Configurações visuais</h3><p>Transparência da caixa de diálogo, tema claro/escuro/automático, velocidade do texto.</p></div>
+        <div class="card"><h3>Save / Load</h3><p>Slots nomeados por usuário: capítulo, cena, escolhas e background restaurados.</p></div>
+    </div>
+</section>
+
+<!-- ============ SLIDE 9 — TECNOLOGIAS ============ -->
+<section class="slide" id="slide-9">
+    <div class="slide-num">09 / 15</div>
+    <div class="kicker">Stack</div>
+    <h2>Tecnologias utilizadas</h2>
+    <table>
+        <tr><th>Tecnologia</th><th>Função no projeto</th></tr>
+        <tr><td><b>HTML5</b></td><td>Estrutura das páginas: landing, login, dashboard e interface da VN.</td></tr>
+        <tr><td><b>CSS3</b></td><td>Identidade visual retrô, slots de personagem, transparência e temas via CSS variables.</td></tr>
+        <tr><td><b>JavaScript puro</b></td><td>Motor da visual novel: cenas, typewriter, escolhas, personagens, áudio.</td></tr>
+        <tr><td><b>PHP</b></td><td>Backend: autenticação, sessões, CSRF, endpoints de salvamento.</td></tr>
+        <tr><td><b>MySQL + PDO</b></td><td>Usuários e saves, com prepared statements e isolamento por usuário.</td></tr>
+        <tr><td><b>JSON</b></td><td>Formato dos capítulos — narrativa separada do código do motor.</td></tr>
+    </table>
+    <p class="dim" style="margin-top:16px">Sem frameworks: para uma máquina de estados narrativa, JS puro deu controle total com menos complexidade.</p>
+</section>
+
+<!-- ============ SLIDE 10 — ARQUITETURA ============ -->
+<section class="slide" id="slide-10">
+    <div class="slide-num">10 / 15</div>
+    <div class="kicker">Como funciona</div>
+    <h2>Arquitetura do sistema</h2>
+    <div class="window" style="padding:26px; max-width:1000px">
+<pre style="font-family:var(--mono); font-size:clamp(12px,1.5vw,17px); line-height:1.8; color:var(--text)">
+   NARRATIVA (JSON)                MOTOR (JS)                  BACKEND (PHP)              DADOS (MySQL)
+┌───────────────┐   fetch   ┌────────────────────┐   POST   ┌──────────────────┐   PDO  ┌──────────┐
+│ chapter_01    │ ────────► │ VNEngine           │ ───────► │ save_manager.php │ ─────► │ saves    │
+│ chapter_02    │  cenas    │  - typewriter      │  save/   │  - valida CSRF    │        │ users    │
+│ (cenas, falas,│          │  - choices/goto    │  load    │  - requireAuth    │        └──────────┘
+│  escolhas)    │          │  - if_choice       │          └──────────────────┘
+└───────────────┘          │ VNInterface        │
+                           │  - sprites/bg     │   ▲ session + cookie PHPSESSID
+                           │  - áudio/settings  │   ▲ token CSRF validado no servidor
+                           └────────────────────┘
+        Browser (HTML/CSS/JS) ◄──────────► Apache/PHP ◄──────────► MySQL
+</pre>
+    </div>
+    <p class="dim" style="margin-top:16px">Separação clara: <span class="red">narrativa</span> em JSON, <span class="red">apresentação</span> em JS/CSS, <span class="red">persistência</span> em PHP/MySQL.</p>
+</section>
+
+<!-- ============ SLIDE 11 — SCRUM ============ -->
+<section class="slide" id="slide-11">
+    <div class="slide-num">11 / 15</div>
+    <div class="kicker">Equipe</div>
+    <h2>Scrum & trabalho em equipe</h2>
+    <div class="cards">
+        <div class="card"><h3>Backlog priorizado</h3><p>Funcionalidades em itens pequenos: cena → sprite → áudio → save.</p></div>
+        <div class="card"><h3>Sprints por etapa</h3><p>Fundação → motor VN → arte → áudio → capítulos → polimento, cada uma com critério de pronto.</p></div>
+        <div class="card"><h3>Review jogando</h3><p>Ao fim de cada etapa, o capítulo inteiro era percorrido e validado.</p></div>
+        <div class="card"><h3>Git/GitHub</h3><p>Commits por funcionalidade — histórico real de correções e features.</p></div>
+        <div class="card"><h3>Exemplo real</h3><p>“Transição Cap.1→Cap.2”: comando next_chapter + preservação de escolhas entre capítulos.</p></div>
+        <div class="card"><h3>Retro</h3><p>Bugs de integração (CSRF, sprites, load) viraram regras de revisão.</p></div>
+    </div>
+</section>
+
+<!-- ============ SLIDE 12 — DESAFIOS ============ -->
+<section class="slide" id="slide-12">
+    <div class="slide-num">12 / 15</div>
+    <div class="kicker">Engenharia</div>
+    <h2>Desafios encontrados e soluções</h2>
+    <div class="cards">
+        <div class="card"><h3>CSRF no save</h3><p>Fetch sem cookies + SameSite Strict + token contaminado por HTML de warning PHP → credentials same-origin, SameSite Lax e limpeza do token.</p></div>
+        <div class="card"><h3>Personagens sumindo</h3><p>setCharacter escondia todos os sprites → visibilidade passou a ser por slot, com remoção explícita.</p></div>
+        <div class="card"><h3>Background no load</h3><p>Save restaurava cena mas não o fundo → restoreBackgroundForScene reaplica o último cenário.</p></div>
+        <div class="card"><h3>Escolhas entre capítulos</h3><p>loadChapter resetava o histórico → next_chapter agora preserva choicesMade.</p></div>
+        <div class="card"><h3>Legibilidade</h3><p>Texto sumia em fundos claros → tema automático por luminância do background + sombras de contraste.</p></div>
+        <div class="card"><h3>Assets novos</h3><p>Integração de 16 cenários, sprites do Goxtoso e 29 áudios sem quebrar o fluxo existente.</p></div>
+    </div>
+</section>
+
+<!-- ============ SLIDE 13 — RESULTADOS ============ -->
+<section class="slide" id="slide-13">
+    <div class="slide-num">13 / 15</div>
+    <div class="kicker">Estado atual</div>
+    <h2>Resultados alcançados</h2>
+    <div class="two-col">
+        <div>
+            <h3>Funcionando hoje</h3>
+            <ul>
+                <li>2 capítulos completos e jogáveis</li>
+                <li>Escolhas com consequência entre capítulos</li>
+                <li>Login, contas e saves por usuário</li>
+                <li>16 backgrounds e 15 personagens</li>
+                <li>29 efeitos/áudios integrados</li>
+                <li>Configurações de áudio e aparência</li>
+            </ul>
+        </div>
+        <div>
+            <img src="public/assets/characters/chefe_goxtoso_bracos_abertos.png" class="spr" alt="Chefe Goxtoso" style="height:300px">
+            <p class="caption">O Salgadinho Goxtoso — chefe da fábrica secreta</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============ SLIDE 14 — FUTURO ============ -->
+<section class="slide" id="slide-14">
+    <div class="slide-num">14 / 15</div>
+    <div class="kicker">Roadmap</div>
+    <h2>Expansão futura</h2>
+    <p class="dim" style="margin-bottom:20px">Tudo abaixo é <b>projeção</b> — ainda não implementado.</p>
+    <div class="cards">
+        <div class="card"><h3>Capítulos 3+</h3><p>Novos JSONs de cena — o motor já suporta capítulos adicionais.</p></div>
+        <div class="card"><h3>Sistema de batalha</h3><p>Confronto com o Goxtoso como mecânica de turnos.</p></div>
+        <div class="card"><h3>RPG / progressão</h3><p>Atributos, inventário e níveis — escopo futuro separado.</p></div>
+        <div class="card"><h3>Modo offline</h3><p>Service worker + saves locais com sincronização.</p></div>
+        <div class="card"><h3>Novos personagens</h3><p>Elenco da fábrica e da administração.</p></div>
+        <div class="card"><h3>Escrita colaborativa</h3><p>Capítulos como dados — escritores não precisam programar.</p></div>
+    </div>
+</section>
+
+<!-- ============ SLIDE 15 — ENCERRAMENTO ============ -->
+<section class="slide" id="slide-15">
+    <div class="slide-num">15 / 15</div>
+    <div style="text-align:center; align-items:center">
+        <img src="public/assets/logo/logo.png" alt="Maleducation" class="logo-img" style="height:110px">
+        <h1 style="margin-top:20px">Obrigado.</h1>
+        <p style="margin-top:14px; color:var(--dim)">Maleducation — uma história que você não deveria ter encontrado.<br>Perguntas?</p>
+        <p style="margin-top:40px; font-size:13px" class="dim">https://github.com/Murilo-web-debug/MaleducationOFC</p>
+    </div>
+</section>
+
+<div class="nav-hint">← → navegar &nbsp;·&nbsp; F fullscreen</div>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    let current = 0;
+
+    function show(i) {
+        current = Math.max(0, Math.min(slides.length - 1, i));
+        slides.forEach((s, idx) => s.classList.toggle('active', idx === current));
+    }
+
+    document.addEventListener('keydown', e => {
+        if (['ArrowRight', 'ArrowDown', ' ', 'PageDown'].includes(e.key)) { e.preventDefault(); show(current + 1); }
+        if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); show(current - 1); }
+        if (e.key === 'Home') show(0);
+        if (e.key === 'End') show(slides.length - 1);
+        if (e.key.toLowerCase() === 'f') {
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+            else document.exitFullscreen();
+        }
+    });
+
+    document.addEventListener('click', e => {
+        if (e.clientX > window.innerWidth / 2) show(current + 1); else show(current - 1);
+    });
+
+    show(0);
+</script>
+</body>
+</html>

@@ -45,6 +45,11 @@ $username = getCurrentUsername();
                     <span class="dash-card-desc">Começar o Capítulo 1 desde o início.</span>
                     <span class="button">Nova Partida</span>
                 </a>
+                <a href="/teste/src/game/gallery.php" class="dash-card">
+                    <span class="dash-card-title">Galeria</span>
+                    <span class="dash-card-desc">Arquivo de imagens: cenários, personagens, versões beta e conceitos.</span>
+                    <span class="button">Abrir Galeria</span>
+                </a>
                 <a href="/teste/index.php" class="dash-card">
                     <span class="dash-card-title">Menu Principal</span>
                     <span class="dash-card-desc">Voltar à página inicial do jogo.</span>

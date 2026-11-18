@@ -15,6 +15,7 @@ const VNEngine = {
         typedText: '',
         typingInterval: null,
         typingSpeed: 30, // ms por caractere
+        currentSpeaker: '', // speaker do diálogo em digitação (preservado ao completar)
         username: null,
         choicesMade: [], // Array de escolhas feitas pelo jogador
         isProcessingChoice: false // Flag para impedir processamento duplo de escolha
@@ -460,6 +461,11 @@ const VNEngine = {
             this.callbacks.onHideChoices();
         }
 
+        // Desbloquear ANTES de navegar: goToScene executa o primeiro elemento
+        // da cena de destino e precisa do motor desbloqueado, senão o elemento
+        // 0 é ignorado (prepareSceneTransition já ocultou os personagens).
+        this.unblock();
+
         // Verificar se o destino existe
         if (choice.target) {
             const targetScene = this.getSceneById(choice.target);
@@ -476,9 +482,6 @@ const VNEngine = {
             // Se não há destino, avançar normalmente
             this.advanceElement();
         }
-
-        // Desbloquear o motor
-        this.unblock();
 
         // Resetar flag de processamento
         setTimeout(() => {
@@ -615,6 +618,7 @@ const VNEngine = {
         this.state.isTyping = true;
         this.state.fullText = text;
         this.state.typedText = '';
+        this.state.currentSpeaker = speaker;
 
         // Limpar intervalo anterior se existir
         if (this.state.typingInterval) {
@@ -653,10 +657,7 @@ const VNEngine = {
         this.state.typedText = this.state.fullText;
 
         if (this.callbacks.onSetDialogue) {
-            this.callbacks.onSetDialogue(
-                this.callbacks.onSetDialogue ? '' : '',
-                this.state.fullText
-            );
+            this.callbacks.onSetDialogue(this.state.currentSpeaker || '', this.state.fullText);
         }
 
         console.log('Maleducation: Digitação concluída');
@@ -802,6 +803,7 @@ const VNEngine = {
             typedText: '',
             typingInterval: null,
             typingSpeed: 30,
+            currentSpeaker: '',
             username: this.state.username,
             choicesMade: [],
             isProcessingChoice: false

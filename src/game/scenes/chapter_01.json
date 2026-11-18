@@ -38,13 +38,13 @@
                     "text": "Você se levanta e passa pela porta do quarto. Ali estão seus pais, como se estivessem esperando."
                 },
                 {
+                    "type": "set_character",
+                    "character": "mae_neutra"
+                },
+                {
                     "type": "dialogue",
                     "speaker": "Mãe",
                     "text": "Está pronto para seu primeiro dia de aula?"
-                },
-                {
-                    "type": "set_character",
-                    "character": "mae_neutra"
                 },
                 {
                     "type": "choices",
@@ -184,13 +184,13 @@
                     "text": "A cozinha está relativamente organizada. O aroma de café recente ainda paira no ar. Seus pais já estão à mesa."
                 },
                 {
+                    "type": "set_character",
+                    "character": "mae_neutra"
+                },
+                {
                     "type": "dialogue",
                     "speaker": "Mãe",
                     "text": "Preparei café. Você quer?"
-                },
-                {
-                    "type": "set_character",
-                    "character": "mae_neutra"
                 },
                 {
                     "type": "choices",
@@ -421,13 +421,13 @@
                     "text": "Ele percebe sua aproximação e para, esperando. Uniforme impecável, postura relaxada."
                 },
                 {
+                    "type": "set_character",
+                    "character": "amigo_neutro"
+                },
+                {
                     "type": "dialogue",
                     "speaker": "Aluno",
                     "text": "Eaí! Você deve ser o novo aluno, né? Vi você na matrícula ontem."
-                },
-                {
-                    "type": "set_character",
-                    "character": "amigo_neutro"
                 },
                 {
                     "type": "dialogue",
@@ -457,13 +457,13 @@
                     "text": "O aluno sorri levemente e diz seu nome. Parece genuinamente disposto a conversar."
                 },
                 {
+                    "type": "set_character",
+                    "character": "amigo_neutro"
+                },
+                {
                     "type": "dialogue",
                     "speaker": "Aluno",
                     "text": "E o seu? Não ouvi na matrícula."
-                },
-                {
-                    "type": "set_character",
-                    "character": "amigo_neutro"
                 },
                 {
                     "type": "dialogue",
@@ -507,13 +507,13 @@
             "id": "scene_ask_about_school",
             "elements": [
                 {
+                    "type": "set_character",
+                    "character": "amigo_assustado"
+                },
+                {
                     "type": "dialogue",
                     "speaker": "Aluno",
                     "text": "Normal? Hm. É... diferente. Mas você vai se acostumar. Todo mundo se acostuma."
-                },
-                {
-                    "type": "set_character",
-                    "character": "amigo_assustado"
                 },
                 {
                     "type": "narration",
@@ -749,13 +749,13 @@
                     "text": "Os alunos não reagem à sua passagem. Eles parecem presos em seus próprios mundos de dor."
                 },
                 {
+                    "type": "set_character",
+                    "character": "amigo_neutro"
+                },
+                {
                     "type": "dialogue",
                     "speaker": "Aluno",
                     "text": "Bem que não foi mexer. Eles não são muito simpáticos quando se sentem provocados."
-                },
-                {
-                    "type": "set_character",
-                    "character": "amigo_neutro"
                 },
                 {
                     "type": "narration",
